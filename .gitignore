@@ -21,3 +21,10 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+/alumni-backend-netcore/.vs
+/alumni-backend-netcore/AluminiBackend/.vs
+/alumni-backend-netcore/AluminiBackend/obj
+/alumni-backend-netcore/AlumniBackendApi/bin/Debug/net9.0
+/alumni-backend-netcore/AlumniBackendApi/obj/Debug/net9.0
+/alumni-backend-netcore/AlumniBackendApi/obj/Release/net9.0
+/alumni-backend-netcore/AlumniBackendApi/obj
