@@ -94,6 +94,32 @@ export interface CreateEventRequest {
   meeting_url?: string;
 }
 
+export interface NavigationItem {
+  id: string;
+  label: string;
+  icon?: string;
+  url?: string;
+  order: number;
+  parentId?: string;
+  groupId?: string;
+  isActive: boolean;
+  children: NavigationItem[];
+}
+
+export interface NavigationGroup {
+  id: string;
+  name: string;
+  description?: string;
+  order: number;
+  isActive: boolean;
+  navigationItems: NavigationItem[];
+}
+
+export interface UserNavigation {
+  groups: NavigationGroup[];
+  flatItems: NavigationItem[];
+}
+
 class ApiService {
   private baseUrl: string;
 
@@ -103,6 +129,7 @@ class ApiService {
 
   private getAuthHeaders(): HeadersInit {
     const token = localStorage.getItem('authToken');
+    console.log('Using token for request:', token ? 'Token present' : 'No token');
     return {
       'Content-Type': 'application/json',
       ...(token && { Authorization: `Bearer ${token}` }),
@@ -110,10 +137,18 @@ class ApiService {
   }
 
   private async handleResponse<T>(response: Response): Promise<ApiResponse<T>> {
-    const data = await response.json();
+    let data: any;
+    try {
+      data = await response.json();
+    } catch (error) {
+      // If response is not JSON, get the text content
+      const textContent = await response.text();
+      console.error('Non-JSON response:', textContent);
+      throw new Error(`Invalid response format: ${response.status} ${response.statusText}`);
+    }
     
     if (!response.ok) {
-      throw new Error(data.message || `HTTP error! status: ${response.status}`);
+      throw new Error(data.message || data.error || `HTTP error! status: ${response.status}`);
     }
     
     return data;
@@ -218,6 +253,15 @@ class ApiService {
   // Health check
   async healthCheck(): Promise<ApiResponse<{ status: string; timestamp: string; service: string }>> {
     return this.request<{ status: string; timestamp: string; service: string }>('/health');
+  }
+
+  // Navigation endpoints
+  async getUserNavigation(): Promise<ApiResponse<UserNavigation>> {
+    return this.request<UserNavigation>('/api/navigation/user');
+  }
+
+  async getNavigationByRole(roleId: string): Promise<ApiResponse<UserNavigation>> {
+    return this.request<UserNavigation>(`/api/navigation/role/${roleId}`);
   }
 
   // Utility methods

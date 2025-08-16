@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { apiService } from '$lib/api';
+	import Navigation from '$lib/components/Navigation.svelte';
 	import { 
 		Users, 
 		Calendar, 
@@ -51,37 +52,9 @@
 		sidebarOpen = !sidebarOpen;
 	}
 	
-	const navigation = [
-		{ name: 'Dashboard', href: '/admin', icon: Home },
-		{ name: 'Alumni Management', href: '/admin/alumni', icon: Users },
-		{ name: 'Event Management', href: '/admin/events', icon: Calendar },
-		{ name: 'Content Management', href: '/admin/content', icon: FileText },
-		{ name: 'User Management', href: '/admin/users', icon: Settings },
-		{ name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
-	];
+	// Navigation will be loaded dynamically from the database
 
-	const subNavigation = {
-		alumni: [
-			{ name: 'All Alumni', href: '/admin/alumni', icon: Users },
-			{ name: 'Add New Alumni', href: '/admin/alumni/new', icon: Plus },
-			{ name: 'Import Alumni', href: '/admin/alumni/import', icon: Download },
-		],
-		events: [
-			{ name: 'All Events', href: '/admin/events', icon: Calendar },
-			{ name: 'Create Event', href: '/admin/events/new', icon: Plus },
-			{ name: 'Event Calendar', href: '/admin/events/calendar', icon: Calendar },
-		],
-		content: [
-			{ name: 'All Content', href: '/admin/content', icon: FileText },
-			{ name: 'Create Content', href: '/admin/content/new', icon: Plus },
-			{ name: 'Media Library', href: '/admin/content/media', icon: Image },
-		],
-		users: [
-			{ name: 'All Users', href: '/admin/users', icon: Users },
-			{ name: 'Add User', href: '/admin/users/new', icon: Plus },
-			{ name: 'Roles & Permissions', href: '/admin/users/roles', icon: Shield },
-		],
-	};
+	// Sub-navigation will be handled by the dynamic navigation component
 </script>
 
 <svelte:head>
@@ -132,46 +105,7 @@
 
 		<nav class="px-6">
 			<h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Navigation</h3>
-			<div class="space-y-2">
-				{#each navigation as item}
-					{@const isActive = currentPath === item.href || currentPath.startsWith(item.href + '/')}
-					{@const hasSubNav = item.name === 'Alumni Management' ? subNavigation.alumni : 
-						item.name === 'Event Management' ? subNavigation.events :
-						item.name === 'Content Management' ? subNavigation.content :
-						item.name === 'User Management' ? subNavigation.users : null}
-					
-					<div class="space-y-1">
-						<a 
-							href={item.href}
-							class="flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 {isActive ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:bg-gray-100'}"
-						>
-							<div class="flex items-center">
-								<svelte:component this={item.icon} class="h-5 w-5 mr-3" />
-								{item.name}
-							</div>
-							{#if hasSubNav}
-								<svg class="h-4 w-4 transform transition-transform {isActive ? 'rotate-90' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-								</svg>
-							{/if}
-						</a>
-						
-						{#if hasSubNav && isActive}
-							<div class="ml-6 space-y-1">
-								{#each hasSubNav as subItem}
-									<a 
-										href={subItem.href}
-										class="flex items-center px-3 py-2 text-sm rounded-lg transition-colors duration-200 {currentPath === subItem.href ? 'bg-primary-50 text-primary-600' : 'text-gray-600 hover:bg-gray-50'}"
-									>
-										<svelte:component this={subItem.icon} class="h-4 w-4 mr-3" />
-										{subItem.name}
-									</a>
-								{/each}
-							</div>
-						{/if}
-					</div>
-				{/each}
-			</div>
+			<Navigation type="admin" showGroups={true} className="space-y-2" />
 		</nav>
 		
 		<!-- Settings Section -->
@@ -194,11 +128,11 @@
 			<div class="flex items-center space-x-3 mb-4">
 				<div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
 					<span class="text-white font-medium">
-						{user?.first_name?.[0]}{user?.last_name?.[0]}
+						{user?.firstName?.[0]}{user?.lastName?.[0]}
 					</span>
 				</div>
 				<div class="flex-1 min-w-0">
-					<p class="text-sm font-medium text-gray-900 truncate">{user?.first_name} {user?.last_name}</p>
+					<p class="text-sm font-medium text-gray-900 truncate">{user?.firstName} {user?.lastName}</p>
 					<p class="text-xs text-gray-500 truncate">{user?.email}</p>
 					<p class="text-xs text-primary-600 font-medium">Administrator</p>
 				</div>
@@ -258,12 +192,12 @@
 					<!-- User Info -->
 					<div class="hidden md:flex items-center space-x-3">
 						<div class="text-right">
-							<p class="text-sm font-medium text-gray-900">{user?.first_name} {user?.last_name}</p>
+							<p class="text-sm font-medium text-gray-900">{user?.firstName} {user?.lastName}</p>
 							<p class="text-xs text-gray-500">Administrator</p>
 						</div>
 						<div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
 							<span class="text-white text-sm font-medium">
-								{user?.first_name?.[0]}{user?.last_name?.[0]}
+								{user?.firstName?.[0]}{user?.lastName?.[0]}
 							</span>
 						</div>
 					</div>
