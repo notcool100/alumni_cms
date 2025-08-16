@@ -2,6 +2,7 @@
 	import { Eye, EyeOff, Mail, Lock } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { apiService } from '$lib/api';
+	import { authStore } from '$lib/stores/auth';
 	
 	let email = '';
 	let password = '';
@@ -26,8 +27,18 @@
 				localStorage.setItem('authToken', response.data.token);
 				localStorage.setItem('user', JSON.stringify(response.data.user));
 				
-				// Redirect to dashboard
-				goto('/dashboard');
+				// Update auth store
+				authStore.setUser(response.data.user);
+				
+				// Check user role and redirect accordingly
+				const user = response.data.user;
+				if (user && (user.roleName === 'Admin' || user.roleName === 'SuperAdmin')) {
+					// Redirect admin users to admin dashboard
+					goto('/admin');
+				} else {
+					// Redirect regular users to main dashboard
+					goto('/dashboard');
+				}
 			} else {
 				error = response.message || 'Login failed';
 			}

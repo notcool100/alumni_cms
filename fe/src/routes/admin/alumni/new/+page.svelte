@@ -44,7 +44,7 @@
 		}
 		
 		const user = apiService.getCurrentUserFromStorage();
-		if (user?.role !== 'admin') {
+		if (user?.roleName !== 'Admin') {
 			goto('/dashboard');
 			return;
 		}

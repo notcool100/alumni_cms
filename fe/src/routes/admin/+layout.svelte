@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { apiService } from '$lib/api';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import { requireNavigationAccess } from '$lib/utils/routeGuards';
 	import { 
 		Users, 
 		Calendar, 
@@ -27,19 +28,13 @@
 	let currentPath = '';
 	
 	onMount(() => {
-		// Check if user is authenticated and is admin
-		if (!apiService.isAuthenticated()) {
-			goto('/auth/login');
+		// Use the route guard for consistent access control
+		if (!requireNavigationAccess()) {
 			return;
 		}
 		
 		user = apiService.getCurrentUserFromStorage();
 		console.log(user," this is user");
-		if (user?.role !== 'Admin') {
-			goto('/dashboard');
-			return;
-		}
-		
 		currentPath = window.location.pathname;
 	});
 	
