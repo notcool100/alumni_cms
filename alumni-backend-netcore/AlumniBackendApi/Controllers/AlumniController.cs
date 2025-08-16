@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using AlumniBackendApi.Models;
 using System;
@@ -11,6 +12,7 @@ namespace AlumniBackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AlumniController : ControllerBase
     {
         private readonly AlumniContext _context;
@@ -24,6 +26,7 @@ namespace AlumniBackendApi.Controllers
 
         // GET: api/alumni
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse<List<Alumni>>>> GetAlumni()
         {
             _logger.LogInformation("📋 Fetching list of alumni");
@@ -42,6 +45,7 @@ namespace AlumniBackendApi.Controllers
 
         // GET: api/alumni/{id}
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse<Alumni>>> GetAlumni(Guid id)
         {
             _logger.LogInformation("🔍 Fetching alumni with ID: {Id}", id);
@@ -86,13 +90,19 @@ namespace AlumniBackendApi.Controllers
         {
             _logger.LogInformation("📝 Creating new alumni profile");
             
-            // In a real implementation, we would get the user ID from the JWT token
-            // For now, we'll use a placeholder
-            var userId = Guid.NewGuid();
+            var userId = User.GetUserId();
+            if (!userId.HasValue)
+            {
+                return Unauthorized(new ApiResponse<Alumni>
+                {
+                    Success = false,
+                    Message = "User not authenticated"
+                });
+            }
 
             var alumni = new Alumni
             {
-                UserId = userId,
+                UserId = userId.Value,
                 GraduationYear = request.GraduationYear,
                 Degree = request.Degree,
                 Major = request.Major,
@@ -126,6 +136,16 @@ namespace AlumniBackendApi.Controllers
         {
             _logger.LogInformation("✏️ Updating alumni profile with ID: {Id}", id);
             
+            var userId = User.GetUserId();
+            if (!userId.HasValue)
+            {
+                return Unauthorized(new ApiResponse<Alumni>
+                {
+                    Success = false,
+                    Message = "User not authenticated"
+                });
+            }
+            
             var alumni = await _context.Alumni.FindAsync(id);
             
             if (alumni == null)
@@ -138,8 +158,11 @@ namespace AlumniBackendApi.Controllers
                 });
             }
 
-            // In a real implementation, we would check if the user is the owner or an admin
-            // For now, we'll allow the update
+            // Check if the user is the owner or an admin
+            if (alumni.UserId != userId.Value && User.GetUserRole() != "admin")
+            {
+                return Forbid();
+            }
 
             alumni.GraduationYear = request.GraduationYear;
             alumni.Degree = request.Degree;
@@ -171,6 +194,16 @@ namespace AlumniBackendApi.Controllers
         {
             _logger.LogInformation("🗑️ Deleting alumni profile with ID: {Id}", id);
             
+            var userId = User.GetUserId();
+            if (!userId.HasValue)
+            {
+                return Unauthorized(new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = "User not authenticated"
+                });
+            }
+            
             var alumni = await _context.Alumni.FindAsync(id);
             
             if (alumni == null)
@@ -183,8 +216,11 @@ namespace AlumniBackendApi.Controllers
                 });
             }
 
-            // In a real implementation, we would check if the user is the owner or an admin
-            // For now, we'll allow the deletion
+            // Check if the user is the owner or an admin
+            if (alumni.UserId != userId.Value && User.GetUserRole() != "admin")
+            {
+                return Forbid();
+            }
 
             _context.Alumni.Remove(alumni);
             await _context.SaveChangesAsync();

@@ -3,9 +3,30 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace AlumniBackendApi.Models
 {
+    // Extension methods for JWT token handling
+    public static class ClaimsPrincipalExtensions
+    {
+        public static Guid? GetUserId(this ClaimsPrincipal user)
+        {
+            var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
+            return userIdClaim != null && Guid.TryParse(userIdClaim.Value, out var userId) ? userId : null;
+        }
+
+        public static string GetUserEmail(this ClaimsPrincipal user)
+        {
+            return user.FindFirst(ClaimTypes.Email)?.Value;
+        }
+
+        public static string GetUserRole(this ClaimsPrincipal user)
+        {
+            return user.FindFirst(ClaimTypes.Role)?.Value;
+        }
+    }
 
 
     [Table("users")]

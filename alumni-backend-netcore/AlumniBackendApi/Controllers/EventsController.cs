@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using AlumniBackendApi.Models;
 using System;
@@ -10,6 +11,7 @@ namespace AlumniBackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EventsController : ControllerBase
     {
         private readonly AlumniContext _context;
@@ -23,6 +25,7 @@ namespace AlumniBackendApi.Controllers
 
         // GET: api/events
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse<List<Event>>>> GetEvents()
         {
             _logger.LogInformation("📋 Fetching list of events");
@@ -39,6 +42,7 @@ namespace AlumniBackendApi.Controllers
 
         // GET: api/events/{id}
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse<Event>>> GetEvent(Guid id)
         {
             _logger.LogInformation("🔍 Fetching event with ID: {Id}", id);
@@ -69,9 +73,15 @@ namespace AlumniBackendApi.Controllers
         {
             _logger.LogInformation("📝 Creating new event");
             
-            // In a real implementation, we would get the user ID from the JWT token
-            // For now, we'll use a placeholder
-            var userId = Guid.NewGuid();
+            var userId = User.GetUserId();
+            if (!userId.HasValue)
+            {
+                return Unauthorized(new ApiResponse<Event>
+                {
+                    Success = false,
+                    Message = "User not authenticated"
+                });
+            }
 
             var eventItem = new Event
             {
@@ -83,7 +93,7 @@ namespace AlumniBackendApi.Controllers
                 MaxAttendees = request.MaxAttendees,
                 IsOnline = request.IsOnline,
                 MeetingUrl = request.MeetingUrl,
-                CreatedBy = userId,
+                CreatedBy = userId.Value,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
@@ -106,6 +116,16 @@ namespace AlumniBackendApi.Controllers
         {
             _logger.LogInformation("✏️ Updating event with ID: {Id}", id);
             
+            var userId = User.GetUserId();
+            if (!userId.HasValue)
+            {
+                return Unauthorized(new ApiResponse<Event>
+                {
+                    Success = false,
+                    Message = "User not authenticated"
+                });
+            }
+            
             var eventItem = await _context.Events.FindAsync(id);
             
             if (eventItem == null)
@@ -118,8 +138,11 @@ namespace AlumniBackendApi.Controllers
                 });
             }
 
-            // In a real implementation, we would check if the user is the creator or an admin
-            // For now, we'll allow the update
+            // Check if the user is the creator or an admin
+            if (eventItem.CreatedBy != userId.Value && User.GetUserRole() != "admin")
+            {
+                return Forbid();
+            }
 
             eventItem.Title = request.Title;
             eventItem.Description = request.Description;
@@ -148,6 +171,16 @@ namespace AlumniBackendApi.Controllers
         {
             _logger.LogInformation("🗑️ Deleting event with ID: {Id}", id);
             
+            var userId = User.GetUserId();
+            if (!userId.HasValue)
+            {
+                return Unauthorized(new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = "User not authenticated"
+                });
+            }
+            
             var eventItem = await _context.Events.FindAsync(id);
             
             if (eventItem == null)
@@ -160,8 +193,11 @@ namespace AlumniBackendApi.Controllers
                 });
             }
 
-            // In a real implementation, we would check if the user is the creator or an admin
-            // For now, we'll allow the deletion
+            // Check if the user is the creator or an admin
+            if (eventItem.CreatedBy != userId.Value && User.GetUserRole() != "admin")
+            {
+                return Forbid();
+            }
 
             _context.Events.Remove(eventItem);
             await _context.SaveChangesAsync();
