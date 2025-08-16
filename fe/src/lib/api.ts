@@ -1,5 +1,5 @@
 // API service for backend communication
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://localhost:5037';
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -10,9 +10,10 @@ export interface ApiResponse<T> {
 export interface User {
   id: string;
   email: string;
-  first_name: string;
-  last_name: string;
-  role: 'admin' | 'alumni' | 'moderator';
+  firstName: string;
+  lastName: string;
+  roleId: string;
+  roleName: string;
 }
 
 export interface AuthResponse {
@@ -26,43 +27,44 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
 
 export interface Alumni {
   id: string;
-  user_id: string;
-  graduation_year: number;
+  userId: string;
+  user: User;
+  graduationYear: number;
   degree: string;
   major: string;
-  current_company?: string;
-  current_position?: string;
+  currentCompany?: string;
+  currentPosition?: string;
   location?: string;
   bio?: string;
-  linkedin_url?: string;
-  github_url?: string;
-  website_url?: string;
-  profile_image_url?: string;
-  is_public: boolean;
-  created_at: string;
-  updated_at: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  websiteUrl?: string;
+  profileImageUrl?: string;
+  isPublic: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateAlumniRequest {
-  graduation_year: number;
+  graduationYear: number;
   degree: string;
   major: string;
-  current_company?: string;
-  current_position?: string;
+  currentCompany?: string;
+  currentPosition?: string;
   location?: string;
   bio?: string;
-  linkedin_url?: string;
-  github_url?: string;
-  website_url?: string;
-  is_public: boolean;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  websiteUrl?: string;
+  isPublic: boolean;
 }
 
 export interface Event {
@@ -236,16 +238,3 @@ class ApiService {
 
 // Export singleton instance
 export const apiService = new ApiService();
-
-// Export types
-export type {
-  ApiResponse,
-  User,
-  AuthResponse,
-  LoginRequest,
-  RegisterRequest,
-  Alumni,
-  CreateAlumniRequest,
-  Event,
-  CreateEventRequest,
-};
