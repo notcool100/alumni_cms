@@ -84,7 +84,8 @@ public class UpdateAlumniCommandHandler : IRequestHandler<UpdateAlumniCommand, A
                 Email = updatedAlumni.User.Email,
                 FirstName = updatedAlumni.User.FirstName,
                 LastName = updatedAlumni.User.LastName,
-                Role = updatedAlumni.User.Role
+                RoleId = updatedAlumni.User.RoleId,
+                RoleName = updatedAlumni.User.Role?.Name ?? string.Empty
             },
             GraduationYear = updatedAlumni.GraduationYear,
             Degree = updatedAlumni.Degree,

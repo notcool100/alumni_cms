@@ -50,7 +50,8 @@ public class GetAlumniByIdQueryHandler : IRequestHandler<GetAlumniByIdQuery, Api
                 Email = alumni.User.Email,
                 FirstName = alumni.User.FirstName,
                 LastName = alumni.User.LastName,
-                Role = alumni.User.Role
+                RoleId = alumni.User.RoleId,
+                RoleName = alumni.User.Role?.Name ?? string.Empty
             },
             GraduationYear = alumni.GraduationYear,
             Degree = alumni.Degree,

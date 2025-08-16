@@ -88,7 +88,8 @@ public class CreateAlumniCommandHandler : IRequestHandler<CreateAlumniCommand, A
                 Email = createdAlumni.User.Email,
                 FirstName = createdAlumni.User.FirstName,
                 LastName = createdAlumni.User.LastName,
-                Role = createdAlumni.User.Role
+                RoleId = createdAlumni.User.RoleId,
+                RoleName = createdAlumni.User.Role?.Name ?? string.Empty
             },
             GraduationYear = createdAlumni.GraduationYear,
             Degree = createdAlumni.Degree,

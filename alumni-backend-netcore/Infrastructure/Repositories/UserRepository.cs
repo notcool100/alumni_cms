@@ -16,6 +16,13 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         return await _dbSet.FirstOrDefaultAsync(u => u.Email == email);
     }
 
+    public async Task<User?> GetByEmailWithRoleAsync(string email)
+    {
+        return await _dbSet
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(u => u.Email == email);
+    }
+
     public async Task<bool> EmailExistsAsync(string email)
     {
         return await _dbSet.AnyAsync(u => u.Email == email);
@@ -23,6 +30,9 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public async Task<IEnumerable<User>> GetByRoleAsync(string role)
     {
-        return await _dbSet.Where(u => u.Role == role).ToListAsync();
+        return await _dbSet
+            .Include(u => u.Role)
+            .Where(u => u.Role.Name == role)
+            .ToListAsync();
     }
 }

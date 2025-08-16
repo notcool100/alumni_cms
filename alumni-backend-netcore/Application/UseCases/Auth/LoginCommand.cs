@@ -29,8 +29,8 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<Aut
 
     public async Task<ApiResponse<AuthResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        // Find user by email
-        var user = await _userRepository.GetByEmailAsync(request.Email);
+        // Find user by email with role included
+        var user = await _userRepository.GetByEmailWithRoleAsync(request.Email);
         if (user == null)
         {
             return new ApiResponse<AuthResponse>
@@ -50,6 +50,16 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<Aut
             };
         }
 
+        // Check if user has a role
+        if (user.Role == null)
+        {
+            return new ApiResponse<AuthResponse>
+            {
+                Success = false,
+                Message = "User role not found"
+            };
+        }
+
         // Generate response
         var userResponse = new UserResponse
         {
@@ -57,7 +67,8 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<Aut
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Role = user.Role
+            RoleId = user.RoleId,
+            RoleName = user.Role.Name
         };
 
         var token = _jwtService.GenerateToken(userResponse);

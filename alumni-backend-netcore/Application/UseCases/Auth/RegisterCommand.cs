@@ -17,15 +17,18 @@ public record RegisterCommand : IRequest<ApiResponse<AuthResponse>>
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ApiResponse<AuthResponse>>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IRoleRepository _roleRepository;
     private readonly IPasswordService _passwordService;
     private readonly IJwtService _jwtService;
 
     public RegisterCommandHandler(
         IUserRepository userRepository,
+        IRoleRepository roleRepository,
         IPasswordService passwordService,
         IJwtService jwtService)
     {
         _userRepository = userRepository;
+        _roleRepository = roleRepository;
         _passwordService = passwordService;
         _jwtService = jwtService;
     }
@@ -42,9 +45,20 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ApiRespon
             };
         }
 
+        // Get default alumni role
+        var alumniRole = await _roleRepository.GetByNameAsync("Alumni");
+        if (alumniRole == null)
+        {
+            return new ApiResponse<AuthResponse>
+            {
+                Success = false,
+                Message = "Default role not found"
+            };
+        }
+
         // Create new user
         var passwordHash = _passwordService.HashPassword(request.Password);
-        var user = new User(request.Email, passwordHash, request.FirstName, request.LastName);
+        var user = new User(request.Email, passwordHash, request.FirstName, request.LastName, alumniRole.Id);
 
         await _userRepository.AddAsync(user);
 
@@ -55,7 +69,8 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ApiRespon
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Role = user.Role
+            RoleId = user.RoleId,
+            RoleName = alumniRole.Name
         };
 
         var token = _jwtService.GenerateToken(userResponse);

@@ -26,7 +26,8 @@ public class JwtService : IJwtService
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role),
+            new Claim(ClaimTypes.Role, user.RoleName),
+            new Claim("roleId", user.RoleId.ToString()),
             new Claim("firstName", user.FirstName),
             new Claim("lastName", user.LastName)
         };
@@ -69,7 +70,8 @@ public class JwtService : IJwtService
                 Email = jwtToken.Claims.First(x => x.Type == ClaimTypes.Email).Value,
                 FirstName = jwtToken.Claims.First(x => x.Type == "firstName").Value,
                 LastName = jwtToken.Claims.First(x => x.Type == "lastName").Value,
-                Role = jwtToken.Claims.First(x => x.Type == ClaimTypes.Role).Value
+                RoleId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "roleId").Value),
+                RoleName = jwtToken.Claims.First(x => x.Type == ClaimTypes.Role).Value
             };
 
             return userResponse;
