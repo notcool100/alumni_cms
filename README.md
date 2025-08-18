@@ -2,7 +2,7 @@
 
 A modern, responsive web application built with SvelteKit for the Alumni Management System. Features a beautiful UI with Tailwind CSS and seamless integration with the Rust backend API.
 
-## Features
+## Features 
 
 - 🎨 **Modern UI/UX** - Beautiful, responsive design with Tailwind CSS
 - 🔐 **Authentication** - Secure login and registration system
