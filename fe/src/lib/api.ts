@@ -1,5 +1,5 @@
 // API service for backend communication
-const API_BASE_URL = 'http://localhost:5037';
+const API_BASE_URL = 'https://be.prajwalgiri.com.np';
 
 export interface ApiResponse<T> {
   success: boolean;

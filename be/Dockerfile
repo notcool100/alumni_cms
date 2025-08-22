@@ -1,55 +1,39 @@
-# Use the official Rust image as a base
-FROM rust:1.75-slim as builder
-
-# Set working directory
+# Use the official .NET 8.0 runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-# Copy the manifests
-COPY Cargo.toml Cargo.lock ./
+# Use the official .NET 8.0 SDK image for building
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
 
-# Create a dummy main.rs to build dependencies
-RUN mkdir src && echo "fn main() {}" > src/main.rs
+# Copy the project file and restore dependencies
+COPY ["AlumniBackendApi/AlumniBackendApi.csproj", "AlumniBackendApi/"]
+RUN dotnet restore "AlumniBackendApi/AlumniBackendApi.csproj"
 
-# Build dependencies
-RUN cargo build --release
-
-# Remove the dummy main.rs
-RUN rm src/main.rs
-
-# Copy the real source code
+# Copy the rest of the source code
 COPY . .
+WORKDIR "/src/AlumniBackendApi"
 
 # Build the application
-RUN cargo build --release
+RUN dotnet build "AlumniBackendApi.csproj" -c Release -o /app/build
 
-# Runtime stage
-FROM debian:bookworm-slim
+# Publish the application
+FROM build AS publish
+RUN dotnet publish "AlumniBackendApi.csproj" -c Release -o /app/publish
 
-# Install runtime dependencies
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+# Build the runtime image
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+# Set environment variables
+ENV ASPNETCORE_URLS=http://+:80
+ENV ASPNETCORE_ENVIRONMENT=Production
 
 # Create a non-root user
-RUN useradd -m -u 1001 -U app
+RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
+USER appuser
 
-# Set working directory
-WORKDIR /app
-
-# Copy the binary from builder stage
-COPY --from=builder /app/target/release/alumni-backend /app/alumni-backend
-
-# Copy migrations
-COPY --from=builder /app/migrations /app/migrations
-
-# Change ownership to the app user
-RUN chown -R app:app /app
-
-# Switch to the app user
-USER app
-
-# Expose port
-EXPOSE 3000
-
-# Run the binary
-CMD ["./alumni-backend"]
+ENTRYPOINT ["dotnet", "AlumniBackendApi.dll"]
