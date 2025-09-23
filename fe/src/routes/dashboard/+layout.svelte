@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { authStore } from '$lib/stores/auth';
 	import { apiService } from '$lib/api';
+	import Navigation from '$lib/components/Navigation.svelte';
 	import { 
 		Users, 
 		Calendar, 
@@ -37,14 +38,7 @@
 		goto('/');
 	}
 
-	const navigation = [
-		{ name: 'Dashboard', href: '/dashboard', icon: Home },
-		{ name: 'Alumni Directory', href: '/dashboard/alumni', icon: Users },
-		{ name: 'Events', href: '/dashboard/events', icon: Calendar },
-		{ name: 'My Profile', href: '/dashboard/profile', icon: User },
-		{ name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
-		{ name: 'Settings', href: '/dashboard/settings', icon: Settings },
-	];
+	// Navigation will be loaded dynamically from the database
 </script>
 
 <div class="min-h-screen bg-gray-50">
@@ -65,30 +59,20 @@
 			<div class="flex items-center">
 				<div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
 					<span class="text-white font-medium">
-						{user?.first_name?.[0]}{user?.last_name?.[0]}
+						{user?.firstName?.[0]}{user?.lastName?.[0]}
 					</span>
 				</div>
 				<div class="ml-3">
-					<p class="text-sm font-medium text-gray-900">{user?.first_name} {user?.last_name}</p>
+					<p class="text-sm font-medium text-gray-900">{user?.firstName} {user?.lastName}</p>
 					<p class="text-xs text-gray-500">{user?.email}</p>
-					<p class="text-xs text-primary-600 capitalize">{user?.role}</p>
+					<p class="text-xs text-primary-600 capitalize">{user?.roleName}</p>
 				</div>
 			</div>
 		</div>
 
 		<!-- Navigation -->
 		<nav class="mt-6 px-3">
-			<div class="space-y-1">
-				{#each navigation as item}
-					<a
-						href={item.href}
-						class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 {$page.url.pathname === item.href ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:bg-gray-100'}"
-					>
-						<svelte:component this={item.icon} class="mr-3 h-5 w-5" />
-						{item.name}
-					</a>
-				{/each}
-			</div>
+			<Navigation type="main" className="space-y-1" />
 		</nav>
 
 		<!-- Logout -->

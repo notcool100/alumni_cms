@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { apiService } from '$lib/api';
+	import { requireNavigationAccess } from '$lib/utils/routeGuards';
 	import { 
 		Save, 
 		X, 
@@ -38,15 +39,8 @@
 	];
 	
 	onMount(() => {
-		// Check if user is authenticated and is admin
-		if (!apiService.isAuthenticated()) {
-			goto('/auth/login');
-			return;
-		}
-		
-		const user = apiService.getCurrentUserFromStorage();
-		if (user?.role !== 'admin') {
-			goto('/dashboard');
+		// Use the route guard for consistent access control
+		if (!requireNavigationAccess()) {
 			return;
 		}
 	});

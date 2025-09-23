@@ -46,7 +46,7 @@
 					<h2 class="text-xl font-semibold text-gray-900 mb-1">
 						{user?.first_name} {user?.last_name}
 					</h2>
-					<p class="text-gray-600 mb-4 capitalize">{user?.role}</p>
+					<p class="text-gray-600 mb-4 capitalize">{user?.roleName}</p>
 					
 					<div class="space-y-3 text-sm">
 						<div class="flex items-center justify-center">
@@ -77,7 +77,7 @@
 						</div>
 						<div>
 							<label class="form-label">Role</label>
-							<p class="text-gray-900 capitalize">{user?.role}</p>
+							<p class="text-gray-900 capitalize">{user?.roleName}</p>
 						</div>
 					</div>
 				</div>

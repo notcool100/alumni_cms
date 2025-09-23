@@ -1,156 +1,264 @@
-# Alumni Backend API
+# Alumni Backend - Clean Architecture
 
-A modern Rust-based REST API for the Alumni Management System built with Axum, SQLx, and PostgreSQL.
+This project has been restructured into a Clean Architecture pattern with separate class library projects.
 
-## Features
+## Project Structure
 
-- 🔐 JWT-based authentication
-- 👥 Alumni profile management
-- 📅 Event management and registration
-- 🗄️ PostgreSQL database with migrations
-- ✅ Input validation
-- 🔒 Password hashing with bcrypt
-- 🌐 CORS support
-- 📝 Comprehensive logging
+### Domain Layer (`Alumni.Domain`)
+- **Purpose**: Contains the core business logic and entities
+- **Dependencies**: None (no external dependencies)
+- **Contains**:
+  - Entities (User, Alumni, Event, EventRegistration)
+  - Value Objects
+  - Domain Interfaces (IRepository, IUserRepository, etc.)
+  - Domain Events
 
-## Prerequisites
+### Application Layer (`Alumni.Application`)
+- **Purpose**: Contains use cases, CQRS (MediatR), and application logic
+- **Dependencies**: Domain layer only
+- **Contains**:
+  - Use Cases (Commands and Queries using MediatR)
+  - DTOs (Data Transfer Objects)
+  - Application Interfaces (IJwtService, IPasswordService)
+  - Validation (FluentValidation)
+  - MediatR Behaviors
 
-- Rust 1.70+ (install via [rustup](https://rustup.rs/))
-- PostgreSQL 12+
-- SQLx CLI (optional, for migrations)
+### Infrastructure Layer (`Alumni.Infrastructure`)
+- **Purpose**: Contains external concerns and implementations
+- **Dependencies**: Application and Domain layers
+- **Contains**:
+  - EF Core DbContext (AppDbContext)
+  - Repository implementations
+  - Service implementations (JwtService, PasswordService)
+  - Identity configuration
+  - Database configuration
 
-## Setup
+### WebAPI Layer (`Alumni.WebAPI`)
+- **Purpose**: Contains the API controllers and configuration
+- **Dependencies**: Application layer (and Infrastructure only through DI)
+- **Contains**:
+  - Controllers
+  - Program.cs configuration
+  - Middleware setup
+  - Swagger configuration
 
-1. **Install dependencies:**
+## Key Features
+
+### MediatR Implementation
+- CQRS pattern with Commands and Queries
+- Pipeline behaviors for validation
+- Clean separation of concerns
+
+### Entity Framework Core
+- Clean domain entities with proper encapsulation
+- Repository pattern implementation
+- PostgreSQL database support
+
+### JWT Authentication
+- Secure token-based authentication
+- Password hashing with BCrypt
+- Role-based authorization
+
+### Validation
+- FluentValidation integration
+- Automatic validation through MediatR pipeline
+- Clean error responses
+
+### Role-Based Access Control (RBAC)
+- Comprehensive role management system
+- Granular permissions for different operations
+- Role-based navigation system
+- Pre-configured roles: SuperAdmin, Admin, Staff, Alumni, Moderator
+- 25+ predefined permissions covering all major system functions
+
+### Navigation System
+- Hierarchical navigation structure
+- Role-based navigation access
+- Organized navigation groups (Main, Administration, Content, Analytics, Settings)
+- 19+ predefined navigation items
+
+## Project Dependencies
+
+```
+Domain ← Application ← Infrastructure ← WebAPI
+```
+
+The dependencies flow inward, ensuring that:
+- Domain has no external dependencies
+- Application depends only on Domain
+- Infrastructure depends on Application and Domain
+- WebAPI depends on Application (and Infrastructure through DI)
+
+## Getting Started
+
+1. **Clone and build the solution**:
    ```bash
-   cargo install sqlx-cli
+   git clone <repository-url>
+   cd alumni-backend-netcore
+   dotnet build
    ```
 
-2. **Create PostgreSQL database:**
+2. **Set up the database**:
    ```bash
-   createdb alumni_db
+   # Install Entity Framework Tools (if not already installed)
+   dotnet tool install --global dotnet-ef
+   
+   # Update connection string in WebAPI/appsettings.json
+   # Then run migrations
+   dotnet ef database update --project Infrastructure --startup-project WebAPI
    ```
 
-3. **Set up environment variables:**
-   Create a `.env` file in the `be` directory:
-   ```env
-   DATABASE_URL=postgresql://postgres:yourdad@localhost:5432/alumni_db
-   JWT_SECRET=your-super-secret-jwt-key-change-in-production
-   PORT=3000
-   ENVIRONMENT=development
-   RUST_LOG=info
-   ```
-
-4. **Run database migrations:**
+3. **Run the WebAPI project**:
    ```bash
-   sqlx migrate run
+   cd WebAPI
+   dotnet run
    ```
 
-5. **Build and run:**
+4. **Access Swagger UI**:
+   - Navigate to `https://localhost:5001/swagger` or `http://localhost:5000/swagger`
+
+5. **Test the API**:
+   - Use the sample users from the seed data:
+     - `admin@alumni.com` (SuperAdmin)
+     - `staff@alumni.com` (Staff)
+     - `alumni@example.com` (Alumni)
+
+## Database Setup
+
+The project uses PostgreSQL with Entity Framework Core. Follow these steps to set up the database:
+
+### Prerequisites
+1. **PostgreSQL**: Make sure PostgreSQL is installed and running
+2. **Connection String**: Update the connection string in `WebAPI/appsettings.json`:
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=localhost;Port=5432;Database=alumni_db;User Id=postgres;Password=your_password;"
+     }
+   }
+   ```
+
+### Database Migration and Seeding
+
+1. **Install Entity Framework Tools** (if not already installed):
    ```bash
-   cargo run
+   dotnet tool install --global dotnet-ef
    ```
 
-The API will be available at `http://localhost:3000`
+2. **Create and apply migrations**:
+   ```bash
+   # Create initial migration (if no migrations exist)
+   dotnet ef migrations add InitialCreate --project Infrastructure --startup-project WebAPI
+   
+   # Apply migrations to create/update database
+   dotnet ef database update --project Infrastructure --startup-project WebAPI
+   ```
+
+3. **Add seed data migration** (if needed):
+   ```bash
+   # Create migration for seed data
+   dotnet ef migrations add SeedData --project Infrastructure --startup-project WebAPI
+   
+   # Apply seed data
+   dotnet ef database update --project Infrastructure --startup-project WebAPI
+   ```
+
+### Database Schema
+
+The database includes the following tables with seed data:
+
+#### Core Tables
+- **users** - User accounts with role-based access
+- **alumni** - Alumni profiles linked to users
+- **events** - Event management
+- **event_registrations** - Event attendance tracking
+
+#### Role-Based Access Control
+- **roles** - User roles (SuperAdmin, Admin, Staff, Alumni, Moderator)
+- **permissions** - System permissions (25 predefined permissions)
+- **role_permissions** - Role-permission relationships
+- **approval_levels** - Approval workflow management
+
+#### Navigation System
+- **navigation_groups** - Navigation organization (Main, Administration, Content, Analytics, Settings)
+- **navigation_items** - Individual navigation items (19 predefined items)
+- **role_navigation** - Role-based navigation access
+
+### Seed Data
+
+The system comes pre-configured with:
+
+#### Roles
+- **SuperAdmin**: Full system access
+- **Admin**: Management access (except system settings)
+- **Staff**: Limited administrative access
+- **Alumni**: Basic access for alumni members
+- **Moderator**: Content and approval rights
+
+#### Permissions
+- User Management (view, create, edit, delete)
+- Alumni Management (view, create, edit, delete, approve)
+- Event Management (view, create, edit, delete, approve)
+- Content Management (view, create, edit, delete, publish)
+- Analytics (view, export)
+- Role Management (view, create, edit, delete)
+- System Settings (view, edit)
+
+#### Navigation Items
+- **Main**: Dashboard, Alumni, Events, Profile
+- **Administration**: User Management, Role Management, Alumni Management, Event Management, Approvals
+- **Content**: Content Management, News & Updates, Resources
+- **Analytics**: Dashboard Analytics, Alumni Reports, Event Reports, Engagement Metrics
+- **Settings**: System Settings, Email Templates, Navigation
+
+#### Sample Users
+- `admin@alumni.com` - SuperAdmin role
+- `staff@alumni.com` - Staff role
+- `alumni@example.com` - Alumni role
+
+### Migration Commands Reference
+
+```bash
+# List all migrations
+dotnet ef migrations list --project Infrastructure --startup-project WebAPI
+
+# Remove last migration
+dotnet ef migrations remove --project Infrastructure --startup-project WebAPI
+
+# Drop database (use with caution)
+dotnet ef database drop --project Infrastructure --startup-project WebAPI --force
+
+# Generate SQL script (without applying)
+dotnet ef migrations script --project Infrastructure --startup-project WebAPI
+
+# Update to specific migration
+dotnet ef database update MigrationName --project Infrastructure --startup-project WebAPI
+```
 
 ## API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - Register a new user
 - `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user profile
 
 ### Alumni
-- `GET /api/alumni` - List all public alumni profiles
-- `GET /api/alumni/:id` - Get specific alumni profile
-- `POST /api/alumni` - Create new alumni profile
-- `PUT /api/alumni/:id` - Update alumni profile
-- `DELETE /api/alumni/:id` - Delete alumni profile
+- `GET /api/alumni` - Get all public alumni profiles
+- `GET /api/alumni/{id}` - Get specific alumni profile
+- `POST /api/alumni` - Create alumni profile (authenticated)
+- `PUT /api/alumni/{id}` - Update alumni profile (authenticated)
 
-### Events
-- `GET /api/events` - List all events
-- `GET /api/events/:id` - Get specific event
-- `POST /api/events` - Create new event
-- `PUT /api/events/:id` - Update event
-- `DELETE /api/events/:id` - Delete event
+## Architecture Benefits
 
-### Health Check
-- `GET /health` - API health status
+1. **Separation of Concerns**: Each layer has a specific responsibility
+2. **Testability**: Easy to unit test business logic in isolation
+3. **Maintainability**: Clear structure makes code easier to maintain
+4. **Scalability**: Easy to add new features without affecting existing code
+5. **Dependency Inversion**: High-level modules don't depend on low-level modules
 
-## Default Admin Account
+## Future Enhancements
 
-The system comes with a default admin account:
-- Email: `admin@alumni.com`
-- Password: `admin123`
-
-## Development
-
-### Running tests
-```bash
-cargo test
-```
-
-### Database migrations
-```bash
-# Create new migration
-sqlx migrate add migration_name
-
-# Run migrations
-sqlx migrate run
-
-# Revert last migration
-sqlx migrate revert
-```
-
-### Code formatting
-```bash
-cargo fmt
-```
-
-### Linting
-```bash
-cargo clippy
-```
-
-## Project Structure
-
-```
-src/
-├── main.rs          # Application entry point
-├── config.rs        # Configuration management
-├── db.rs           # Database connection and setup
-├── auth.rs         # Authentication utilities
-├── models.rs       # Data models and DTOs
-├── handlers/       # API route handlers
-│   ├── mod.rs
-│   ├── health.rs
-│   ├── auth.rs
-│   ├── alumni.rs
-│   └── events.rs
-└── utils/          # Utility functions
-
-migrations/         # Database migrations
-```
-
-## Security Features
-
-- Password hashing with bcrypt
-- JWT token authentication
-- Input validation with validator crate
-- CORS configuration
-- SQL injection prevention with parameterized queries
-
-## Error Handling
-
-The API uses consistent error responses:
-```json
-{
-  "success": false,
-  "data": null,
-  "message": "Error description"
-}
-```
-
-## Logging
-
-The application uses structured logging with the `tracing` crate. Log levels can be configured via the `RUST_LOG` environment variable.
+- Add more use cases for Events and Event Registrations
+- Implement caching layer
+- Add logging and monitoring
+- Implement event sourcing
+- Add unit and integration tests

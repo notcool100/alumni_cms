@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { Eye, EyeOff, Mail, Lock } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { apiService } from '$lib/api';
+	import { authStore } from '$lib/stores/auth';
 	
 	let email = '';
 	let password = '';
@@ -26,8 +28,23 @@
 				localStorage.setItem('authToken', response.data.token);
 				localStorage.setItem('user', JSON.stringify(response.data.user));
 				
-				// Redirect to dashboard
-				goto('/dashboard');
+				// Update auth store
+				authStore.setUser(response.data.user);
+				
+				// Check for redirect parameter or use role-based redirect
+				const redirectParam = $page.url.searchParams.get('redirect');
+				const user = response.data.user;
+				
+				if (redirectParam && redirectParam.startsWith('/')) {
+					// Redirect to the originally requested page
+					goto(redirectParam);
+				} else if (user && (user.roleName === 'Admin' || user.roleName === 'SuperAdmin')) {
+					// Redirect admin users to admin dashboard
+					goto('/admin');
+				} else {
+					// Redirect regular users to main dashboard
+					goto('/dashboard');
+				}
 			} else {
 				error = response.message || 'Login failed';
 			}

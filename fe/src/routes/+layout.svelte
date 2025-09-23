@@ -1,18 +1,22 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { authStore } from '$lib/stores/auth';
 	import { page } from '$app/stores';
 	import { Menu, X, Users, Calendar, Info, Mail, LogIn, UserPlus } from 'lucide-svelte';
+	import Navigation from '$lib/components/Navigation.svelte';
+
+	export let data;
 
 	onMount(() => {
 		authStore.init();
 	});
 
-	$: isAuthenticated = $authStore.isAuthenticated;
-	$: user = $authStore.user;
-	$: isAdmin = user?.role === 'admin';
-	$: isAlumni = user?.role === 'alumni';
+	// Use server-side data as fallback, client-side store as primary
+	$: isAuthenticated = $authStore.isAuthenticated || data.isAuthenticated;
+	$: user = $authStore.user || data.user;
+	$: isAdmin = user?.roleName === 'Admin';
+	$: isAlumni = user?.roleName === 'Alumni';
 	
 	let mobileMenuOpen = false;
 </script>
@@ -34,21 +38,25 @@
 
 				<!-- Desktop Navigation -->
 				<nav class="hidden md:flex items-center space-x-8">
-					<a href="/" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
-						Home
-					</a>
-					<a href="/alumni" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
-						Alumni Directory
-					</a>
-					<a href="/events" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
-						Events
-					</a>
-					<a href="/about" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
-						About
-					</a>
-					<a href="/contact" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
-						Contact
-					</a>
+					{#if isAuthenticated}
+						<Navigation type="main" className="flex items-center space-x-8" />
+					{:else}
+						<a href="/" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
+							Home
+						</a>
+						<a href="/alumni" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
+							Alumni Directory
+						</a>
+						<a href="/events" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
+							Events
+						</a>
+						<a href="/about" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
+							About
+						</a>
+						<a href="/contact" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">
+							Contact
+						</a>
+					{/if}
 				</nav>
 
 				<!-- Desktop Auth Buttons -->
@@ -65,7 +73,7 @@
 								</a>
 							{/if}
 							<div class="flex items-center space-x-2">
-								<span class="text-sm text-gray-700">Welcome, {user?.first_name}</span>
+								<span class="text-sm text-gray-700">Welcome, {user?.firstName}</span>
 								<button 
 									onclick={() => authStore.logout()}
 									class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium"
@@ -105,21 +113,25 @@
 			{#if mobileMenuOpen}
 				<div class="md:hidden">
 					<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
-						<a href="/" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
-							Home
-						</a>
-						<a href="/alumni" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
-							Alumni Directory
-						</a>
-						<a href="/events" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
-							Events
-						</a>
-						<a href="/about" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
-							About
-						</a>
-						<a href="/contact" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
-							Contact
-						</a>
+						{#if isAuthenticated}
+							<Navigation type="mobile" className="space-y-1" />
+						{:else}
+							<a href="/" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+								Home
+							</a>
+							<a href="/alumni" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+								Alumni Directory
+							</a>
+							<a href="/events" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+								Events
+							</a>
+							<a href="/about" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+								About
+							</a>
+							<a href="/contact" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+								Contact
+							</a>
+						{/if}
 						
 						{#if isAuthenticated}
 							<div class="border-t border-gray-200 pt-4">
@@ -133,7 +145,7 @@
 									</a>
 								{/if}
 								<div class="px-3 py-2 text-sm text-gray-600">
-									Welcome, {user?.first_name}
+									Welcome, {user?.firstName}
 								</div>
 								<button 
 									onclick={() => authStore.logout()}
