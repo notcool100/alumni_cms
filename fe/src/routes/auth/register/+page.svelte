@@ -2,7 +2,7 @@
 	import { Eye, EyeOff, Mail, Lock, User, Calendar } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { apiService } from '$lib/api';
-	
+
 	let firstName = '';
 	let lastName = '';
 	let email = '';
@@ -14,31 +14,31 @@
 	let loading = false;
 	let error = '';
 	let success = '';
-	
+
 	// Generate graduation year options (last 50 years to next 5 years)
 	const graduationYears = Array.from({ length: 55 }, (_, i) => new Date().getFullYear() - 50 + i);
-	
+
 	async function handleRegister() {
 		// Validation
 		if (!firstName || !lastName || !email || !password || !confirmPassword) {
 			error = 'Please fill in all fields';
 			return;
 		}
-		
+
 		if (password !== confirmPassword) {
 			error = 'Passwords do not match';
 			return;
 		}
-		
+
 		if (password.length < 8) {
 			error = 'Password must be at least 8 characters long';
 			return;
 		}
-		
+
 		loading = true;
 		error = '';
 		success = '';
-		
+
 		try {
 			const response = await apiService.register({
 				first_name: firstName,
@@ -46,7 +46,7 @@
 				email,
 				password,
 			});
-			
+
 			if (response.success && response.data) {
 				success = 'Registration successful! Redirecting to dashboard...';
 				// Store token if provided
@@ -92,19 +92,19 @@
 				</a>
 			</p>
 		</div>
-		
+
 		{#if error}
 			<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
 				{error}
 			</div>
 		{/if}
-		
+
 		{#if success}
 			<div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
 				{success}
 			</div>
 		{/if}
-		
+
 		<form class="mt-8 space-y-6" on:submit|preventDefault={handleRegister}>
 			<div class="space-y-4">
 				<div class="grid grid-cols-2 gap-4">
@@ -125,7 +125,7 @@
 							/>
 						</div>
 					</div>
-					
+
 					<div>
 						<label for="lastName" class="form-label">Last Name</label>
 						<div class="relative">
@@ -144,7 +144,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div>
 					<label for="email" class="form-label">Email address</label>
 					<div class="relative">
@@ -163,7 +163,7 @@
 						/>
 					</div>
 				</div>
-				
+
 				<div>
 					<label for="graduationYear" class="form-label">Graduation Year</label>
 					<div class="relative">
@@ -182,7 +182,7 @@
 						</select>
 					</div>
 				</div>
-				
+
 				<div>
 					<label for="password" class="form-label">Password</label>
 					<div class="relative">
@@ -213,7 +213,7 @@
 					</div>
 					<p class="mt-1 text-sm text-gray-500">Must be at least 8 characters long</p>
 				</div>
-				
+
 				<div>
 					<label for="confirmPassword" class="form-label">Confirm Password</label>
 					<div class="relative">

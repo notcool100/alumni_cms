@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { authStore } from '$lib/stores/auth';
@@ -6,12 +6,15 @@
 	import { Menu, X, Users, Calendar, Info, Mail, LogIn, UserPlus } from 'lucide-svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
 
+	export let data;
+
 	onMount(() => {
 		authStore.init();
 	});
 
-	$: isAuthenticated = $authStore.isAuthenticated;
-	$: user = $authStore.user;
+	// Use server-side data as fallback, client-side store as primary
+	$: isAuthenticated = $authStore.isAuthenticated || data.isAuthenticated;
+	$: user = $authStore.user || data.user;
 	$: isAdmin = user?.roleName === 'Admin';
 	$: isAlumni = user?.roleName === 'Alumni';
 	

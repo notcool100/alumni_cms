@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Eye, EyeOff, Mail, Lock } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { apiService } from '$lib/api';
 	import { authStore } from '$lib/stores/auth';
 	
@@ -30,9 +31,14 @@
 				// Update auth store
 				authStore.setUser(response.data.user);
 				
-				// Check user role and redirect accordingly
+				// Check for redirect parameter or use role-based redirect
+				const redirectParam = $page.url.searchParams.get('redirect');
 				const user = response.data.user;
-				if (user && (user.roleName === 'Admin' || user.roleName === 'SuperAdmin')) {
+				
+				if (redirectParam && redirectParam.startsWith('/')) {
+					// Redirect to the originally requested page
+					goto(redirectParam);
+				} else if (user && (user.roleName === 'Admin' || user.roleName === 'SuperAdmin')) {
 					// Redirect admin users to admin dashboard
 					goto('/admin');
 				} else {

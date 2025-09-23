@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { apiService } from '$lib/api';
 	import Navigation from '$lib/components/Navigation.svelte';
-	import { requireNavigationAccess } from '$lib/utils/routeGuards';
+	import { clientMiddleware } from '$lib/middleware/clientMiddleware';
 	import { 
 		Users, 
 		Calendar, 
@@ -23,18 +23,20 @@
 		User
 	} from 'lucide-svelte';
 	
-	let user: any = null;
+	export let data: any;
+	
+	let user: any = data.user;
 	let sidebarOpen = false;
 	let currentPath = '';
 	
 	onMount(() => {
-		// Use the route guard for consistent access control
-		if (!requireNavigationAccess()) {
-			return;
-		}
+		// Additional client-side middleware check
+		clientMiddleware.requireAdmin().then((hasAccess) => {
+			if (!hasAccess) {
+				return;
+			}
+		});
 		
-		user = apiService.getCurrentUserFromStorage();
-		console.log(user," this is user");
 		currentPath = window.location.pathname;
 	});
 	

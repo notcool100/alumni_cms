@@ -102,7 +102,7 @@ The dependencies flow inward, ensuring that:
    ```bash
    # Install Entity Framework Tools (if not already installed)
    dotnet tool install --global dotnet-ef
-   
+
    # Update connection string in WebAPI/appsettings.json
    # Then run migrations
    dotnet ef database update --project Infrastructure --startup-project WebAPI
@@ -149,7 +149,7 @@ The project uses PostgreSQL with Entity Framework Core. Follow these steps to se
    ```bash
    # Create initial migration (if no migrations exist)
    dotnet ef migrations add InitialCreate --project Infrastructure --startup-project WebAPI
-   
+
    # Apply migrations to create/update database
    dotnet ef database update --project Infrastructure --startup-project WebAPI
    ```
@@ -158,7 +158,7 @@ The project uses PostgreSQL with Entity Framework Core. Follow these steps to se
    ```bash
    # Create migration for seed data
    dotnet ef migrations add SeedData --project Infrastructure --startup-project WebAPI
-   
+
    # Apply seed data
    dotnet ef database update --project Infrastructure --startup-project WebAPI
    ```
