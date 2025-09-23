@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "dKqyKm3MbcXQK+XmzlxKmrrPxnY4HesreQ2e8RTSynbHs+9xgoej4UruRleUl0vppJHTFPh8+g1EvnDbaQQj/Q==",
+  "success": true,
+  "projectFilePath": "/home/notcool/Desktop/almunipro/alumni-backend-netcore/Domain/Alumni.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/notcool/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.19/microsoft.aspnetcore.app.ref.8.0.19.nupkg.sha512"
+  ],
+  "logs": []
+}

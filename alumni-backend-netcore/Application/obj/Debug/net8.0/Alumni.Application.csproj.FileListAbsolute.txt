@@ -1,0 +1,16 @@
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.csproj.AssemblyReference.cache
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.AssemblyInfoInputs.cache
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.AssemblyInfo.cs
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.csproj.CoreCompileInputs.cache
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.sourcelink.json
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/bin/Debug/net8.0/Alumni.Application.deps.json
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/bin/Debug/net8.0/Alumni.Application.dll
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/bin/Debug/net8.0/Alumni.Application.pdb
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/bin/Debug/net8.0/Alumni.Domain.dll
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/bin/Debug/net8.0/Alumni.Domain.pdb
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.csproj.CopyComplete
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.dll
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/refint/Alumni.Application.dll
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/Alumni.Application.pdb
+/home/notcool/Desktop/almunipro/alumni-backend-netcore/Application/obj/Debug/net8.0/ref/Alumni.Application.dll
