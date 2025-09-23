@@ -1,0 +1,71 @@
+trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  frontendPath: 'fe'       
+  backendPath: 'be'        
+  vpsUser: 'root'
+  vpsHost: '82.180.144.91'
+  appPath: '/var/www/almuni'
+
+stages:
+- stage: BuildFrontend
+  displayName: 'Build Svelte Frontend'
+  jobs:
+  - job: BuildFE
+    pool:
+      name: 'Astro'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '20.x'
+    - script: |
+        cd $(frontendPath)
+        npm install
+        npm run build
+      displayName: 'Build Frontend'
+
+- stage: BuildBackend
+  displayName: 'Build .NET Backend'
+  jobs:
+  - job: BuildBE
+    pool:
+      name: 'Astro'
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '8.x'
+    - script: |
+        cd $(backendPath)
+        dotnet publish -c Release -o publish
+      displayName: 'Publish .NET App'
+
+- stage: Deploy
+  displayName: 'Deploy to VPS'
+  jobs:
+  - job: Deploy
+    pool:
+      name: 'Astro'
+    steps:
+    - task: CopyFilesOverSSH@0
+      inputs:
+        sshEndpoint: 'YourVPSConnection'
+        sourceFolder: '$(frontendPath)/build'
+        targetFolder: '$(appPath)/frontend'
+        cleanTargetFolder: true
+    - task: CopyFilesOverSSH@0
+      inputs:
+        sshEndpoint: '82.180.144.91'
+        sourceFolder: '$(backendPath)/publish'
+        targetFolder: '$(appPath)/backend'
+        cleanTargetFolder: true
+    - task: SSH@0
+      inputs:
+        sshEndpoint: '82.180.144.91'
+        runOptions: 'commands'
+        commands: |
+          sudo systemctl restart your-dotnet-service
+          sudo systemctl restart nginx
