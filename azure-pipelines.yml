@@ -52,19 +52,19 @@ stages:
     steps:
     - task: CopyFilesOverSSH@0
       inputs:
-        sshEndpoint: 'YourVPSConnection'
+        sshEndpoint: 'AlmuniVPS'
         sourceFolder: '$(frontendPath)/build'
         targetFolder: '$(appPath)/frontend'
         cleanTargetFolder: true
     - task: CopyFilesOverSSH@0
       inputs:
-        sshEndpoint: '82.180.144.91'
+        sshEndpoint: 'AlmuniVPS'
         sourceFolder: '$(backendPath)/publish'
         targetFolder: '$(appPath)/backend'
         cleanTargetFolder: true
     - task: SSH@0
       inputs:
-        sshEndpoint: '82.180.144.91'
+        sshEndpoint: 'AlmuniVPS'
         runOptions: 'commands'
         commands: |
           sudo systemctl restart your-dotnet-service
