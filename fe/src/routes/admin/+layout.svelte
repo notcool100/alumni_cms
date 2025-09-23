@@ -61,7 +61,14 @@
 <div class="min-h-screen bg-gray-50">
 	<!-- Mobile sidebar overlay -->
 	{#if sidebarOpen}
-		<div class="fixed inset-0 z-40 lg:hidden" on:click={toggleSidebar}>
+		<div
+			class="fixed inset-0 z-40 lg:hidden"
+			on:click={toggleSidebar}
+			on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSidebar(); } }}
+			role="button"
+			tabindex="0"
+			aria-label="Close sidebar"
+		>
 			<div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
 		</div>
 	{/if}

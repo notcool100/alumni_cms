@@ -1,5 +1,5 @@
 // API service for backend communication
-const API_BASE_URL = "http://localhost:5037";
+const API_BASE_URL = process.env.API_BASE_URL ?? "";
 
 export interface ApiResponse<T> {
 	success: boolean;
@@ -124,7 +124,7 @@ class ApiService {
 	private baseUrl: string;
 
 	constructor(baseUrl: string = API_BASE_URL) {
-		this.baseUrl = baseUrl;
+		this.baseUrl = baseUrl || "";
 	}
 
 	private getAuthHeaders(): HeadersInit {

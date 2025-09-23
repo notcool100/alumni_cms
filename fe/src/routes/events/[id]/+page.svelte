@@ -11,6 +11,12 @@
 	$: eventId = $page.params.id;
 
 	onMount(async () => {
+		if (!eventId) {
+			error = 'Event ID not found';
+			loading = false;
+			return;
+		}
+
 		try {
 			const response = await apiService.getEventById(eventId);
 			if (response.success && response.data) {
@@ -124,10 +130,12 @@
 							{event.description}
 						</p>
 					</div>
-					{@const status = getEventStatus(event)}
-					<span class="ml-6 px-4 py-2 rounded-full text-sm font-medium {status.class}">
-						{status.text}
-					</span>
+					{#if event}
+						{@const status = getEventStatus(event)}
+						<span class="ml-6 px-4 py-2 rounded-full text-sm font-medium {status.class}">
+							{status.text}
+						</span>
+					{/if}
 				</div>
 				
 				<!-- Event Details -->
@@ -277,47 +285,49 @@
 				<!-- Sidebar -->
 				<div class="lg:col-span-1">
 					<!-- Registration Card -->
-					<div class="bg-gray-50 rounded-lg p-6 mb-6 sticky top-6">
+					{#if event}
 						{@const regStatus = getRegistrationStatus(event)}
-						<h3 class="text-lg font-semibold text-gray-900 mb-4">Registration</h3>
-						
-						<div class="space-y-4">
-							<div class="flex justify-between items-center">
-								<span class="text-gray-600">Attendees</span>
-								<span class="font-semibold text-gray-900">
-									{event.current_attendees}
-									{#if event.max_attendees}
-										/ {event.max_attendees}
-									{/if}
-								</span>
-							</div>
-							
-							{#if event.max_attendees}
-								<div class="w-full bg-gray-200 rounded-full h-2">
-									<div 
-										class="bg-primary-600 h-2 rounded-full" 
-										style="width: {(event.current_attendees / event.max_attendees) * 100}%"
-									></div>
+						<div class="bg-gray-50 rounded-lg p-6 mb-6 sticky top-6">
+							<h3 class="text-lg font-semibold text-gray-900 mb-4">Registration</h3>
+
+							<div class="space-y-4">
+								<div class="flex justify-between items-center">
+									<span class="text-gray-600">Attendees</span>
+									<span class="font-semibold text-gray-900">
+										{event.current_attendees}
+										{#if event.max_attendees}
+											/ {event.max_attendees}
+										{/if}
+									</span>
 								</div>
-								<p class="text-sm text-gray-500">
-									{event.max_attendees - event.current_attendees} spots remaining
-								</p>
-							{/if}
-							
-							<button
-								class="w-full py-3 px-4 rounded-lg font-medium {regStatus.disabled ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'btn-primary'}"
-								disabled={regStatus.disabled}
-							>
-								{regStatus.text}
-							</button>
-							
-							{#if isEventUpcoming(event)}
-								<p class="text-sm text-gray-500 text-center">
-									Registration closes 24 hours before the event
-								</p>
-							{/if}
+
+								{#if event.max_attendees}
+									<div class="w-full bg-gray-200 rounded-full h-2">
+										<div
+											class="bg-primary-600 h-2 rounded-full"
+											style="width: {(event.current_attendees / event.max_attendees) * 100}%"
+										></div>
+									</div>
+									<p class="text-sm text-gray-500">
+										{event.max_attendees - event.current_attendees} spots remaining
+									</p>
+								{/if}
+
+								<button
+									class="w-full py-3 px-4 rounded-lg font-medium {regStatus.disabled ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'btn-primary'}"
+									disabled={regStatus.disabled}
+								>
+									{regStatus.text}
+								</button>
+
+								{#if isEventUpcoming(event)}
+									<p class="text-sm text-gray-500 text-center">
+										Registration closes 24 hours before the event
+									</p>
+								{/if}
+							</div>
 						</div>
-					</div>
+					{/if}
 
 					<!-- Event Info -->
 					<div class="bg-gray-50 rounded-lg p-6">

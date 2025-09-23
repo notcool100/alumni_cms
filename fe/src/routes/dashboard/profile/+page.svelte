@@ -64,20 +64,20 @@
 					
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div>
-							<label class="form-label">First Name</label>
-							<p class="text-gray-900">{user?.first_name || 'Not provided'}</p>
+							<label for="first-name" class="form-label">First Name</label>
+							<p id="first-name" class="text-gray-900">{user?.first_name || 'Not provided'}</p>
 						</div>
 						<div>
-							<label class="form-label">Last Name</label>
-							<p class="text-gray-900">{user?.last_name || 'Not provided'}</p>
+							<label for="last-name" class="form-label">Last Name</label>
+							<p id="last-name" class="text-gray-900">{user?.last_name || 'Not provided'}</p>
 						</div>
 						<div>
-							<label class="form-label">Email</label>
-							<p class="text-gray-900">{user?.email}</p>
+							<label for="email" class="form-label">Email</label>
+							<p id="email" class="text-gray-900">{user?.email}</p>
 						</div>
 						<div>
-							<label class="form-label">Role</label>
-							<p class="text-gray-900 capitalize">{user?.roleName}</p>
+							<label for="role" class="form-label">Role</label>
+							<p id="role" class="text-gray-900 capitalize">{user?.roleName}</p>
 						</div>
 					</div>
 				</div>

@@ -6,6 +6,6 @@ export default defineConfig({
 	server: {
 		port: 5173,
 		host: true,
-		allowedHosts:['localhost','demo.prajwalgiri.com.np']
+		allowedHosts:['localhost','82.180.144.91']
 	}
 });

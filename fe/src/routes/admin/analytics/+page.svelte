@@ -136,15 +136,15 @@
 	<!-- Filters -->
 	<div class="card mb-8">
 		<div class="flex items-center space-x-4">
-			<label class="text-sm font-medium text-gray-700">Time Period:</label>
-			<select bind:value={selectedPeriod} class="input-field w-48">
+			<label for="time-period" class="text-sm font-medium text-gray-700">Time Period:</label>
+			<select id="time-period" bind:value={selectedPeriod} class="input-field w-48">
 				{#each periods as period}
 					<option value={period.value}>{period.label}</option>
 				{/each}
 			</select>
-			
-			<label class="text-sm font-medium text-gray-700 ml-4">Metric:</label>
-			<select bind:value={selectedMetric} class="input-field w-48">
+
+			<label for="metric-select" class="text-sm font-medium text-gray-700 ml-4">Metric:</label>
+			<select id="metric-select" bind:value={selectedMetric} class="input-field w-48">
 				{#each metrics as metric}
 					<option value={metric.value}>{metric.label}</option>
 				{/each}
