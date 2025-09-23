@@ -1,5 +1,5 @@
 import type { Handle } from '@sveltejs/kit';
-import { JWT_SECRET } from '$env/static/private';
+import { JWT_SECRET } from '$env/dynamic/private';
 import jwt from 'jsonwebtoken';
 
 // Define protected routes that require authentication
@@ -40,7 +40,14 @@ export const handle: Handle = async ({ event, resolve }) => {
   const token = event.cookies.get('authToken') || 
                 request.headers.get('authorization')?.replace('Bearer ', '');
 
-  let user = null;
+  let user: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    roleId: string;
+    roleName: string;
+  } | undefined = undefined;
   let isAuthenticated = false;
 
   // Verify JWT token if present
@@ -64,6 +71,9 @@ export const handle: Handle = async ({ event, resolve }) => {
       console.log('Invalid JWT token:', error);
       // Clear invalid token
       event.cookies.delete('authToken', { path: '/' });
+      user = undefined;
+      event.locals.user = undefined;
+      event.locals.isAuthenticated = false;
     }
   }
 
