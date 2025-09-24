@@ -4,12 +4,11 @@ trigger:
       - main
 
 variables:
-  frontendPath: 'fe'       
-  backendPath: 'be/WebAPI'        
+  frontendPath: 'fe'
+  backendPath: 'be/WebAPI'
   vpsUser: 'root'
   vpsHost: '82.180.144.91'
   appPath: '/var/www/almuni'
-
 
 stages:
 - stage: BuildFrontend
@@ -32,6 +31,10 @@ stages:
         npm install
         npm run build
       displayName: 'Build Frontend'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(frontendPath)/build'
+        artifact: 'frontend'
 
 - stage: BuildBackend
   displayName: 'Build .NET Backend'
@@ -48,7 +51,11 @@ stages:
         cd $(backendPath)
         dotnet restore
         dotnet publish -c Release -o publish
-      displayName: 'Publish .NET App'
+      displayName: 'Restore and Publish .NET App'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(backendPath)/publish'
+        artifact: 'backend'
 
 - stage: Deploy
   displayName: 'Deploy to VPS'
@@ -57,18 +64,29 @@ stages:
     pool:
       name: 'Astro'
     steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: 'frontend'
+        path: '$(Pipeline.Workspace)/frontend'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: 'backend'
+        path: '$(Pipeline.Workspace)/backend'
+
     - task: CopyFilesOverSSH@0
       inputs:
         sshEndpoint: 'AlmuniVPS'
-        sourceFolder: '$(frontendPath)/build'
+        sourceFolder: '$(Pipeline.Workspace)/frontend'
         targetFolder: '$(appPath)/frontend'
         cleanTargetFolder: true
+
     - task: CopyFilesOverSSH@0
       inputs:
         sshEndpoint: 'AlmuniVPS'
-        sourceFolder: '$(backendPath)/publish'
+        sourceFolder: '$(Pipeline.Workspace)/backend'
         targetFolder: '$(appPath)/backend'
         cleanTargetFolder: true
+
     - task: SSH@0
       inputs:
         sshEndpoint: 'AlmuniVPS'
