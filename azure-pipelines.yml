@@ -10,6 +10,8 @@ variables:
   vpsHost: '82.180.144.91'
   appPath: '/var/www/almuni'
 
+
+
 stages:
 - stage: BuildFrontend
   displayName: 'Build Svelte Frontend'
@@ -21,8 +23,13 @@ stages:
     - task: NodeTool@0
       inputs:
         versionSpec: '20.x'
+    - task: DownloadSecureFile@1
+      name: FrontendEnv
+      inputs:
+        secureFile: 'envexample'
     - script: |
         cd $(frontendPath)
+        cp $(FrontendEnv.secureFilePath) .env
         npm install
         npm run build
       displayName: 'Build Frontend'
