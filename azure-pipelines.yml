@@ -92,5 +92,5 @@ stages:
         sshEndpoint: 'AlmuniVPS'
         runOptions: 'commands'
         commands: |
-          sudo systemctl restart your-dotnet-service
+          sudo systemctl restart alumni-backend.service
           sudo systemctl restart nginx
