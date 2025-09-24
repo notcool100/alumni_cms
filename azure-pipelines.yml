@@ -5,7 +5,7 @@ trigger:
 
 variables:
   frontendPath: 'fe'       
-  backendPath: 'be'        
+  backendPath: 'alumni-backend-netcore'        
   vpsUser: 'root'
   vpsHost: '82.180.144.91'
   appPath: '/var/www/almuni'
