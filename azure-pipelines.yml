@@ -5,11 +5,10 @@ trigger:
 
 variables:
   frontendPath: 'fe'       
-  backendPath: 'alumni-backend-netcore'        
+  backendPath: 'be/WebAPI'        
   vpsUser: 'root'
   vpsHost: '82.180.144.91'
   appPath: '/var/www/almuni'
-
 
 
 stages:
@@ -47,6 +46,7 @@ stages:
         version: '8.x'
     - script: |
         cd $(backendPath)
+        dotnet restore
         dotnet publish -c Release -o publish
       displayName: 'Publish .NET App'
 
