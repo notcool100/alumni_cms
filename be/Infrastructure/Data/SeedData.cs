@@ -314,7 +314,7 @@ public static class SeedData
         // Seed sample users with roles
         var sampleUsers = new List<User>
         {
-            new User("admin@alumni.com", "$2a$10$5mp59MZx2bYxkPWDJlHfD.sN.LgcoJPG.jcUEfcHZmbkOgDo9DaMK", "Admin", "User", superAdminRole.Id) 
+            new User("admin@alumni.com", "$2a$11$dgxpRa4JM9Le0QH1kUmy7earThhdxfWeICblOMyqzxgAtzKQQ2BaC", "Admin", "User", superAdminRole.Id) 
             { 
                 Id = Guid.Parse("a1111111-1111-1111-1111-111111111111"),
                 CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),

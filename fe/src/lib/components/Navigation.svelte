@@ -135,41 +135,39 @@
 				</div>
 			{/each}
 		{:else}
-			<div class="space-y-1">
-				{#each getNavigationItems().filter(item => item.isActive) as item}
-					{@const IconComponent = getIcon(item.icon)}
-					{@const active = isActive(item)}
-					
-					<a 
-						href={item.url}
-						class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 {active ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:bg-gray-100'}"
-					>
-						{#if IconComponent}
-							<svelte:component this={IconComponent} class="h-5 w-5 mr-3" />
-						{/if}
-						{item.label}
-					</a>
-					
-					{#if item.children && item.children.length > 0}
-						<div class="ml-6 space-y-1">
-							{#each item.children.filter(child => child.isActive) as child}
-								{@const ChildIconComponent = getIcon(child.icon)}
-								{@const childActive = isActive(child)}
-								
-								<a 
-									href={child.url}
-									class="flex items-center px-3 py-2 text-sm rounded-lg transition-colors duration-200 {childActive ? 'bg-primary-50 text-primary-600' : 'text-gray-600 hover:bg-gray-50'}"
-								>
-									{#if ChildIconComponent}
-										<svelte:component this={ChildIconComponent} class="h-4 w-4 mr-3" />
-									{/if}
-									{child.label}
-								</a>
-							{/each}
-						</div>
+			{#each getNavigationItems().filter(item => item.isActive) as item}
+				{@const IconComponent = getIcon(item.icon)}
+				{@const active = isActive(item)}
+				
+				<a 
+					href={item.url}
+					class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 {active ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:bg-gray-100'}"
+				>
+					{#if IconComponent}
+						<svelte:component this={IconComponent} class="h-5 w-5 mr-3" />
 					{/if}
-				{/each}
-			</div>
+					{item.label}
+				</a>
+				
+				{#if item.children && item.children.length > 0}
+					<div class="ml-6 space-y-1">
+						{#each item.children.filter(child => child.isActive) as child}
+							{@const ChildIconComponent = getIcon(child.icon)}
+							{@const childActive = isActive(child)}
+							
+							<a 
+								href={child.url}
+								class="flex items-center px-3 py-2 text-sm rounded-lg transition-colors duration-200 {childActive ? 'bg-primary-50 text-primary-600' : 'text-gray-600 hover:bg-gray-50'}"
+							>
+								{#if ChildIconComponent}
+									<svelte:component this={ChildIconComponent} class="h-4 w-4 mr-3" />
+								{/if}
+								{child.label}
+							</a>
+						{/each}
+					</div>
+				{/if}
+			{/each}
 		{/if}
 	</nav>
 {/if}

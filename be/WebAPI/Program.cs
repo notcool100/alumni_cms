@@ -83,4 +83,6 @@ app.UseCors("AllowAllOrigins");
 
 app.MapControllers();
 
+BCrypt.Net.BCrypt.HashPassword("Admin123");
+
 app.Run();
