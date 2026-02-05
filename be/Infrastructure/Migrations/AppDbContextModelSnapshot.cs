@@ -4,7 +4,6 @@ using Alumni.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -16,81 +15,77 @@ namespace Alumni.Infrastructure.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
 
             modelBuilder.Entity("Alumni.Domain.Entities.Alumni", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<string>("Bio")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("bio");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<string>("CurrentCompany")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("current_company");
 
                     b.Property<string>("CurrentPosition")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("current_position");
 
                     b.Property<string>("Degree")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("degree");
 
                     b.Property<string>("GithubUrl")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("github_url");
 
                     b.Property<int>("GraduationYear")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("graduation_year");
 
                     b.Property<bool>("IsPublic")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(true)
                         .HasColumnName("is_public");
 
                     b.Property<string>("LinkedinUrl")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("linkedin_url");
 
                     b.Property<string>("Location")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("location");
 
                     b.Property<string>("Major")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("major");
 
                     b.Property<string>("ProfileImageUrl")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("profile_image_url");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("updated_at");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("user_id");
 
                     b.Property<string>("WebsiteUrl")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("website_url");
 
                     b.HasKey("Id");
@@ -105,38 +100,38 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(true)
                         .HasColumnName("is_active");
 
                     b.Property<int>("Level")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("level");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("role_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -150,61 +145,61 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_by");
 
                     b.Property<int>("CurrentAttendees")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(0)
                         .HasColumnName("current_attendees");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("end_date");
 
                     b.Property<bool>("IsOnline")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(false)
                         .HasColumnName("is_online");
 
                     b.Property<string>("Location")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("location");
 
                     b.Property<int?>("MaxAttendees")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("max_attendees");
 
                     b.Property<string>("MeetingUrl")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("meeting_url");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("start_date");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("title");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -218,33 +213,33 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("EventId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("event_id");
 
                     b.Property<DateTime>("RegistrationDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(DateTime.Now)//new DateTime( DateTimeKind.Utc).AddTicks(8595))
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(new DateTime(2026, 2, 5, 19, 24, 20, 762, DateTimeKind.Utc).AddTicks(409))
                         .HasColumnName("registration_date");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(0)
                         .HasColumnName("status");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -261,34 +256,34 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(true)
                         .HasColumnName("is_active");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<int>("Order")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("order");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -355,46 +350,46 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<Guid?>("GroupId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("group_id");
 
                     b.Property<string>("Icon")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("icon");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(true)
                         .HasColumnName("is_active");
 
                     b.Property<string>("Label")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("label");
 
                     b.Property<int>("Order")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("order");
 
                     b.Property<Guid?>("ParentId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("parent_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("updated_at");
 
                     b.Property<string>("Url")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("url");
 
                     b.HasKey("Id");
@@ -640,34 +635,34 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<string>("Action")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("action");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("code");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Module")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("module");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -954,30 +949,30 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<bool>("IsSystem")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(false)
                         .HasColumnName("is_system");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -1039,23 +1034,23 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<Guid>("NavigationItemId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("navigation_item_id");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("role_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -1069,443 +1064,443 @@ namespace Alumni.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4b8fdc5f-ff32-4741-8889-a0336a98ab74"),
+                            Id = new Guid("a1518867-b272-47db-bdc2-5018f47a96de"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7500)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(2615)
                         },
                         new
                         {
-                            Id = new Guid("8ff242ed-c719-4c44-a061-55662533bdf8"),
+                            Id = new Guid("64dd97ef-7e9a-464e-8464-f1d0c1c45369"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7814)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3001)
                         },
                         new
                         {
-                            Id = new Guid("6c4a80cf-53fa-4301-bd6d-c44920c2d485"),
+                            Id = new Guid("de54685f-d079-4f47-975b-8d95068809ec"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7818)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3004)
                         },
                         new
                         {
-                            Id = new Guid("6fe3e44d-4baa-4dbc-ae80-0a103ad9a0b0"),
+                            Id = new Guid("161e1bae-b016-46d4-8ad3-e96d0165f0ba"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7819)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3005)
                         },
                         new
                         {
-                            Id = new Guid("86bab4c4-cfec-4940-8bf5-51a1988af797"),
+                            Id = new Guid("c951a795-50a6-46da-b530-a4b53846b292"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7821)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3007)
                         },
                         new
                         {
-                            Id = new Guid("b8690cc2-97fd-4c15-b8d9-5cb3ef547ce9"),
+                            Id = new Guid("cf2a9822-9193-4ecc-904b-9cb185d245ab"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000006"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7826)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3015)
                         },
                         new
                         {
-                            Id = new Guid("37762435-a067-48d5-a938-5fd01f370e3d"),
+                            Id = new Guid("3e089bc7-3ed2-4f23-8c0b-c57d23043b42"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000007"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7827)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3016)
                         },
                         new
                         {
-                            Id = new Guid("ef1e1ccf-4d10-44b4-9358-85a2298950eb"),
+                            Id = new Guid("b1dea53c-f829-4955-8e34-98387707bc67"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000008"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7828)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3017)
                         },
                         new
                         {
-                            Id = new Guid("ee647e9d-336b-4c66-b6d8-47daaf5fc977"),
+                            Id = new Guid("5591d663-3750-4a3d-8c61-a803062edce1"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000009"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7830)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3019)
                         },
                         new
                         {
-                            Id = new Guid("340a539d-1792-4155-a9fe-df3f03649529"),
+                            Id = new Guid("6be080b6-3464-405f-9888-3c108cbe806c"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000010"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7832)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3021)
                         },
                         new
                         {
-                            Id = new Guid("ae9813f4-ef54-4bf7-8e85-b1e29d0aac5e"),
+                            Id = new Guid("4ba0915a-fe95-4177-b440-f470474b526e"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000011"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7833)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3022)
                         },
                         new
                         {
-                            Id = new Guid("caea9827-3852-41ef-b01c-f9304ec17e05"),
+                            Id = new Guid("53cd76e5-2691-4833-8fe3-d9e927439c48"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000012"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7834)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3023)
                         },
                         new
                         {
-                            Id = new Guid("c054ab17-ff69-4ccb-bda8-3965a1ab4607"),
+                            Id = new Guid("888f2ff7-a4f8-492a-a093-f7b2197511f4"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000013"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7835)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3024)
                         },
                         new
                         {
-                            Id = new Guid("8d7e01eb-6c64-4395-968a-5565d353f8e4"),
+                            Id = new Guid("4835726a-01e5-4e27-a73f-c40ea84d3606"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000014"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7839)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3027)
                         },
                         new
                         {
-                            Id = new Guid("d77a3aba-3304-4519-9171-8d6171db2a88"),
+                            Id = new Guid("9484d1f5-de1d-4ab4-afe9-2727e64917be"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000015"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7840)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3028)
                         },
                         new
                         {
-                            Id = new Guid("fa24aaba-8f5a-44bf-a804-d1f4dba2f424"),
+                            Id = new Guid("05f0fcb0-9807-4da0-bc38-b3774762f32e"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000016"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7841)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3029)
                         },
                         new
                         {
-                            Id = new Guid("1593ca91-2ef3-43d4-86d4-569e77d92b03"),
+                            Id = new Guid("3dd78fdb-5a85-4bd6-bfee-a538e1354ec4"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000017"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7842)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3030)
                         },
                         new
                         {
-                            Id = new Guid("5534cc8f-6ec8-412a-9853-9f0c05dff430"),
+                            Id = new Guid("f48891ed-3b49-401e-8048-dacdbb2cdda0"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000018"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7844)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3032)
                         },
                         new
                         {
-                            Id = new Guid("23eff579-3fd1-4a44-9518-5ee184e3b6a4"),
+                            Id = new Guid("662b6d46-5ac1-4259-a30c-18f18371c705"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000019"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(7845)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3033)
                         },
                         new
                         {
-                            Id = new Guid("85d801ac-1ba3-4d61-a433-0f2dd2077803"),
+                            Id = new Guid("21f74887-21ad-4fef-b21b-5d829df7152c"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8534)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3798)
                         },
                         new
                         {
-                            Id = new Guid("db583862-b4cf-4152-9c63-2b4f19f2bece"),
+                            Id = new Guid("4457ce60-1f8d-4680-b6fc-e2cda1971134"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8536)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(3996)
                         },
                         new
                         {
-                            Id = new Guid("b07d8908-3e88-476d-b5aa-5e43f1f1337d"),
+                            Id = new Guid("17541395-7d6e-4ffb-93e7-4fa5bb7458c3"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8540)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4000)
                         },
                         new
                         {
-                            Id = new Guid("83475485-2619-4232-ad7f-4746b7681c1c"),
+                            Id = new Guid("dd0af9cc-83eb-4155-9c44-3d3880023a97"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8541)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4001)
                         },
                         new
                         {
-                            Id = new Guid("2bdc53a9-2406-4244-8f6e-826c24881cd9"),
+                            Id = new Guid("a08f2bdc-675f-4078-9597-81c4bce28977"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8542)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4002)
                         },
                         new
                         {
-                            Id = new Guid("55dc8d0a-79f8-4eb5-a1d0-daec2565c39e"),
+                            Id = new Guid("952d3734-9465-4d7c-a9b0-aea8fde05071"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000006"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8544)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4003)
                         },
                         new
                         {
-                            Id = new Guid("f77f392e-aed4-42cf-9c2a-d78b9f281d8b"),
+                            Id = new Guid("6e8bfbd7-70f2-4816-81f9-886be7520a54"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000007"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8545)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4004)
                         },
                         new
                         {
-                            Id = new Guid("7e72d33a-1ac7-4826-9808-2d37b7d54132"),
+                            Id = new Guid("4c42c91f-4828-46d3-9386-dbcecf3c9ac8"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000008"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8546)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4005)
                         },
                         new
                         {
-                            Id = new Guid("0abeaa56-9bb6-43d6-bf6a-db0fa5f75cf4"),
+                            Id = new Guid("9663b99f-d885-407e-8a3e-a084b93c6bbe"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000009"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8547)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4006)
                         },
                         new
                         {
-                            Id = new Guid("8ba2eefb-b5f8-479d-92c8-63a336cafe76"),
+                            Id = new Guid("06a737bf-7e8f-494b-b3a1-308c322aa5b7"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000010"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8548)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4008)
                         },
                         new
                         {
-                            Id = new Guid("73104830-705d-44e2-b9d1-53d145548555"),
+                            Id = new Guid("61ac1582-6ef9-47d8-bd21-2b412ad337b8"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000011"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8551)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4010)
                         },
                         new
                         {
-                            Id = new Guid("ba17bde7-19ab-48a3-95c3-6feec615056e"),
+                            Id = new Guid("2a0faca3-eb25-4eec-9137-bac181eb4b6e"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000012"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8552)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4011)
                         },
                         new
                         {
-                            Id = new Guid("31782a16-cea8-441b-8d17-58889b422047"),
+                            Id = new Guid("6bec62ff-08bb-42d5-b1dd-801c3394ae31"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000013"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8553)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4012)
                         },
                         new
                         {
-                            Id = new Guid("3ba09ac9-fdb5-4da8-90f6-697d74bc1957"),
+                            Id = new Guid("5db4524b-3098-42d8-b72d-c9950404b5f1"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000014"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8554)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4013)
                         },
                         new
                         {
-                            Id = new Guid("280f70ac-7812-4a8e-9eb6-27d43a387e26"),
+                            Id = new Guid("2e44180d-16f7-4af4-b390-776fcd469eb0"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000015"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8556)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4016)
                         },
                         new
                         {
-                            Id = new Guid("9ec170cb-b06e-4284-a7bb-df84919e8db7"),
+                            Id = new Guid("bcacf5e7-9692-46b4-8978-4a0487818e20"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000016"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(8557)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4017)
                         },
                         new
                         {
-                            Id = new Guid("92e3ce2c-5eae-4fa0-815a-0e2eebeae12f"),
+                            Id = new Guid("fd850b2d-5f21-47a5-bfbe-2edb508699ee"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9175)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4918)
                         },
                         new
                         {
-                            Id = new Guid("ff5a9326-1afc-41ac-8536-8811d6e9c640"),
+                            Id = new Guid("9047f6a3-fb2c-4197-8560-3e5cdda1c732"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9176)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4919)
                         },
                         new
                         {
-                            Id = new Guid("1c0c7ee2-56f0-467a-997f-3f758f9c00e1"),
+                            Id = new Guid("a44be761-3e8f-48cd-8c4e-4260083c0f0c"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9179)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4923)
                         },
                         new
                         {
-                            Id = new Guid("ebb17808-4f63-4f8b-8c35-85a75e4bf14c"),
+                            Id = new Guid("c022f47d-e80e-4011-ae44-a23b8fe5463f"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9233)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4924)
                         },
                         new
                         {
-                            Id = new Guid("f5ec168f-3839-4d44-afdb-b9a351e5bb9b"),
+                            Id = new Guid("f7b6238c-64b4-49c4-98ad-213065c7de8b"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000007"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9234)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4925)
                         },
                         new
                         {
-                            Id = new Guid("04586417-9943-4d53-b1a9-cfa7fbcd60e8"),
+                            Id = new Guid("356b93e0-50df-4615-958a-5dbcf627ac47"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000008"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9236)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4927)
                         },
                         new
                         {
-                            Id = new Guid("eecc4f95-cd4f-4b0a-8bc9-0a3cf960de37"),
+                            Id = new Guid("282f7102-5a22-483a-8aca-c43d082243cc"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000010"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9237)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4928)
                         },
                         new
                         {
-                            Id = new Guid("b360e23d-d7eb-40bf-88de-f0565475799f"),
+                            Id = new Guid("35ba3685-102c-4df1-b402-0089c59f20ab"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000013"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9238)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(4929)
                         },
                         new
                         {
-                            Id = new Guid("90edc9f2-7a1b-487b-8133-e9c9b26059de"),
+                            Id = new Guid("abf6f354-3812-437c-baee-c15a7c76eed0"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9723)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(5875)
                         },
                         new
                         {
-                            Id = new Guid("03d8ca22-a3cd-4b92-967a-9c8d895d1f79"),
+                            Id = new Guid("9b013d5c-811e-403f-88a7-fecaa2983298"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9724)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(5877)
                         },
                         new
                         {
-                            Id = new Guid("da96d1e1-9058-4bc6-a258-9c17fb65c2fc"),
+                            Id = new Guid("cf56c38c-9964-4899-8af3-bf4c99c7f221"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9728)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(5881)
                         },
                         new
                         {
-                            Id = new Guid("cca59826-54a0-4672-8ae6-44aef67973d2"),
+                            Id = new Guid("0cce29e4-b292-4344-9702-b93aa91a82ff"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9729)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(5882)
                         },
                         new
                         {
-                            Id = new Guid("6f33d3d2-bf43-4ec2-8e47-3dba447da519"),
+                            Id = new Guid("222c6f29-e843-40ea-91f7-6b6b84a355b4"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000009"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9730)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(5884)
                         },
                         new
                         {
-                            Id = new Guid("ee5ed138-6211-42a7-830e-79449514e71e"),
+                            Id = new Guid("dec94f27-f50f-44f8-8879-0463386b1fc5"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000010"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9731)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(5885)
                         },
                         new
                         {
-                            Id = new Guid("29e8d415-957b-480c-ba00-5aca01e40818"),
+                            Id = new Guid("5f94ceac-3bb3-445b-903b-2e37249ee767"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000011"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9733)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(5887)
                         },
                         new
                         {
-                            Id = new Guid("c3a15f7e-4c6e-4379-a6fd-5112316cb2c6"),
+                            Id = new Guid("8b037af1-b5fb-4d84-b753-df525313d21c"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000012"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(9734)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(5888)
                         },
                         new
                         {
-                            Id = new Guid("749cedad-c84e-46da-88a2-1eda7476b7e3"),
+                            Id = new Guid("8c73f969-2801-46e7-9bb6-f1fb0aa73b0d"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 569, DateTimeKind.Utc).AddTicks(75)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(8674)
                         },
                         new
                         {
-                            Id = new Guid("aea4a6c6-5745-4558-a174-e4dc602aa7cc"),
+                            Id = new Guid("dea2ecdc-763b-41ad-a877-7e97bea15673"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 569, DateTimeKind.Utc).AddTicks(77)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(8678)
                         },
                         new
                         {
-                            Id = new Guid("73464d09-85d6-47ff-8016-1f65bd2c7d6f"),
+                            Id = new Guid("13eca219-8b3f-4fad-9fb6-4385bcecdcdc"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 569, DateTimeKind.Utc).AddTicks(80)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(8679)
                         },
                         new
                         {
-                            Id = new Guid("4c4300a3-2cbe-4f6d-aabf-797b02ff4b36"),
+                            Id = new Guid("ba1a29d7-4e72-493b-80a8-ba338bdaa6cd"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             NavigationItemId = new Guid("90000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 569, DateTimeKind.Utc).AddTicks(84)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(8681)
                         });
                 });
 
@@ -1513,23 +1508,23 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<Guid>("PermissionId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("permission_id");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("role_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -1543,539 +1538,539 @@ namespace Alumni.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4a784b73-2edf-4ea1-ae15-860ee03eeb33"),
+                            Id = new Guid("873231d2-d130-455a-b764-8ada689e9e01"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("10000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3516)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6421)
                         },
                         new
                         {
-                            Id = new Guid("615aa196-6867-41b4-bf1c-95980158d617"),
+                            Id = new Guid("19e743ae-36b8-4811-8f3b-efc9d26ab7c0"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("10000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3754)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6835)
                         },
                         new
                         {
-                            Id = new Guid("799bdd59-1b9c-4f59-9b03-355205a91e5a"),
+                            Id = new Guid("07c9be96-7792-43fc-b4a6-1d12caec3e66"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("10000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3756)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6838)
                         },
                         new
                         {
-                            Id = new Guid("b05036e9-6567-4bb9-979c-20f526253a9c"),
+                            Id = new Guid("7bebd91a-a981-400c-a46b-50af808358c2"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("10000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3758)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6839)
                         },
                         new
                         {
-                            Id = new Guid("0a1ec384-df6e-4220-b199-7a97de1d3021"),
+                            Id = new Guid("39fa9242-44cb-492b-b64f-e1e5398208a6"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3759)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6840)
                         },
                         new
                         {
-                            Id = new Guid("3f576ca8-fe0f-42b0-af23-ad5c83090962"),
+                            Id = new Guid("2491d4af-2116-49fb-b465-8d8a89a99020"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3764)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6843)
                         },
                         new
                         {
-                            Id = new Guid("bfb2e74b-9261-4e27-a8d5-7024a48320d2"),
+                            Id = new Guid("c903d891-ae4c-4ef8-a4d5-d034dea694ee"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3766)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6844)
                         },
                         new
                         {
-                            Id = new Guid("2e71a082-0a75-49bb-bf90-cfe1aa03adb7"),
+                            Id = new Guid("1c39ff81-750e-4a6d-95a4-8968648509b8"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3768)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6845)
                         },
                         new
                         {
-                            Id = new Guid("fc80f2c0-b2a8-4456-9844-b4f50b5bae33"),
+                            Id = new Guid("2d18b1d2-9a65-49a8-9258-a471d9959284"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3771)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6849)
                         },
                         new
                         {
-                            Id = new Guid("233e8610-27f9-467f-b9b7-f881703c8943"),
+                            Id = new Guid("cbaf1e82-e853-4383-b129-236932a8370d"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3773)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6851)
                         },
                         new
                         {
-                            Id = new Guid("a9dee0eb-abb0-40f4-b3a9-a59600034e3c"),
+                            Id = new Guid("6ad0ada8-e9aa-4e6a-aaca-52d609d4490b"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3775)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6853)
                         },
                         new
                         {
-                            Id = new Guid("788bd4cc-6e2e-4df1-8a3a-980d70b1582b"),
+                            Id = new Guid("a41f859f-df4e-437e-9f15-4700c6d6e107"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3777)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6854)
                         },
                         new
                         {
-                            Id = new Guid("49763069-7fa4-4093-87e8-07da18196de2"),
+                            Id = new Guid("4cb51a5d-238e-4a98-8630-f47aa3175838"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3778)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6855)
                         },
                         new
                         {
-                            Id = new Guid("695bcb52-4661-4ad1-8ca7-183af7a396b2"),
+                            Id = new Guid("f2e8afbf-7538-4cde-8506-8092739589fc"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3779)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6857)
                         },
                         new
                         {
-                            Id = new Guid("b7e51c09-027d-4d0d-b03f-f363e01f7bf0"),
+                            Id = new Guid("e2870522-4a54-4bb9-a7fb-4c178f373ded"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3780)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6858)
                         },
                         new
                         {
-                            Id = new Guid("600b5d0b-bbbc-4261-9a55-1f5e14ee9b78"),
+                            Id = new Guid("8d87924b-9736-48bf-a031-60572c94ceae"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3781)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6859)
                         },
                         new
                         {
-                            Id = new Guid("6152eb29-725f-407c-bb99-3002474a7284"),
+                            Id = new Guid("28f9ec91-8dbc-48ea-8d12-2aa168bd562b"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3783)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6862)
                         },
                         new
                         {
-                            Id = new Guid("88963b55-2dc3-4d17-a426-dfd0b9327967"),
+                            Id = new Guid("c3f4231a-2c32-41dc-bc8b-872bc91fb22c"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3842)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6864)
                         },
                         new
                         {
-                            Id = new Guid("37c6a8ec-c649-41df-9e92-9433e1422453"),
+                            Id = new Guid("7f1bf86f-444f-4b30-a29d-141ae9636e82"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3844)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6865)
                         },
                         new
                         {
-                            Id = new Guid("b8c8d0c4-5d74-40b2-af3f-af629c04a477"),
+                            Id = new Guid("fcc6461c-6631-4f30-94df-94302f8b5f24"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("50000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3845)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6866)
                         },
                         new
                         {
-                            Id = new Guid("e1226e1a-82b1-4ed8-8958-94d5999a892b"),
+                            Id = new Guid("83171f13-5ea3-4992-afa9-2b7e037d4677"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("50000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3846)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6867)
                         },
                         new
                         {
-                            Id = new Guid("840116d9-1c55-476a-b75a-164418e7870b"),
+                            Id = new Guid("aac08836-db8c-4e51-bddb-33b081585c38"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("60000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3847)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6868)
                         },
                         new
                         {
-                            Id = new Guid("4ace0744-543f-4571-8e55-358ed3a77155"),
+                            Id = new Guid("2b9ac2c0-d12c-405f-8a67-b3ed93dd8e72"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("60000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3848)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6870)
                         },
                         new
                         {
-                            Id = new Guid("8015c27a-5805-4b08-8126-6f63286ab7de"),
+                            Id = new Guid("8cede750-58bb-4dfa-ae9a-9e56af024114"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("60000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3849)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6871)
                         },
                         new
                         {
-                            Id = new Guid("3335d925-e542-4bcb-9575-ccd5c97340e3"),
+                            Id = new Guid("cfcec572-e89c-4d1e-b867-a80214d23678"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("60000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3852)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6873)
                         },
                         new
                         {
-                            Id = new Guid("ea892459-ebaf-43ff-8b9b-57ac1e97bc3c"),
+                            Id = new Guid("77288e0d-7ecc-45c1-94f7-bc2a3236cbbc"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("70000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3853)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6874)
                         },
                         new
                         {
-                            Id = new Guid("fa04a2ae-df17-4e53-957c-85f4332d24db"),
+                            Id = new Guid("f94ca942-760c-43e2-bffb-419c379611ec"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("70000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(3854)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(6876)
                         },
                         new
                         {
-                            Id = new Guid("b2bd5afe-575b-4d20-8c32-c4b31cce4445"),
+                            Id = new Guid("9841aa50-fc67-4d52-995e-0fc566e2ebec"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("10000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5254)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9125)
                         },
                         new
                         {
-                            Id = new Guid("93f25229-1264-4b14-a02f-d0d3db939364"),
+                            Id = new Guid("ac833e24-c9be-45c0-bd31-9ac6b6c93689"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("10000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5256)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9129)
                         },
                         new
                         {
-                            Id = new Guid("64da9e3b-2015-46ac-a991-cabd474a719a"),
+                            Id = new Guid("bb375465-289c-4bca-bf68-4b8701784055"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("10000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5257)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9130)
                         },
                         new
                         {
-                            Id = new Guid("f86dc67f-ce58-4063-b211-8801422d87cb"),
+                            Id = new Guid("442514dd-ebe1-4b4e-86c3-7f2b99066ab8"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("10000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5258)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9132)
                         },
                         new
                         {
-                            Id = new Guid("cbc64516-3b85-4bfc-b572-3f9b1bf6ce03"),
+                            Id = new Guid("81c44102-bb17-4b92-b3d2-f139bd1780b5"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5259)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9133)
                         },
                         new
                         {
-                            Id = new Guid("5d987407-431d-4e14-a198-115f90adbb4a"),
+                            Id = new Guid("08cac6df-24be-49a3-b1b6-a3dca4eb7e13"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5263)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9140)
                         },
                         new
                         {
-                            Id = new Guid("4c8ad5f4-0939-4c5d-a730-1de2313f2f65"),
+                            Id = new Guid("e4b096f2-ea8d-436b-9790-64e595547be2"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5265)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9143)
                         },
                         new
                         {
-                            Id = new Guid("32cea393-2235-4afd-917c-c44db08f2171"),
+                            Id = new Guid("89f94058-0fcd-40ab-8b40-89ec08ab06ba"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5267)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9144)
                         },
                         new
                         {
-                            Id = new Guid("951424cb-cc9b-4837-b8be-ee87bc0897c6"),
+                            Id = new Guid("2728d576-1222-40fc-8a2e-fbe582fc70ec"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5268)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9146)
                         },
                         new
                         {
-                            Id = new Guid("7d163388-10e4-4470-b448-b0e2a91856c5"),
+                            Id = new Guid("25ed6017-1740-4a9c-90d8-acc7c44b8968"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5269)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9148)
                         },
                         new
                         {
-                            Id = new Guid("86beec20-aa03-4785-b9db-9566bffb9d22"),
+                            Id = new Guid("df67b433-3561-4137-a6b2-63c845031835"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5270)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9149)
                         },
                         new
                         {
-                            Id = new Guid("ee1ac87d-f7a2-4a48-b5d8-711db0971427"),
+                            Id = new Guid("ecc62315-ab8f-4676-8fc6-68798e871787"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5271)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9150)
                         },
                         new
                         {
-                            Id = new Guid("3852dbd1-03a1-4c34-8767-17b2bd952e58"),
+                            Id = new Guid("7876d179-c717-4020-afc8-0bd91a7fb8f2"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5272)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9152)
                         },
                         new
                         {
-                            Id = new Guid("e374480f-69ea-4121-80b1-cdb45c0a17bc"),
+                            Id = new Guid("04809fa0-dfc1-4174-b950-b79f267d9176"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5274)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9155)
                         },
                         new
                         {
-                            Id = new Guid("1ea1a2d8-c2f5-412e-91d7-5b4a24913055"),
+                            Id = new Guid("69f98344-f2a6-4170-a825-45ccef923aa1"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5276)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9156)
                         },
                         new
                         {
-                            Id = new Guid("617ec3c3-32ab-44e8-978c-3ff0bb18a866"),
+                            Id = new Guid("dcadcd31-d202-4755-a0b3-c3d513eece73"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5277)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9158)
                         },
                         new
                         {
-                            Id = new Guid("2d5bb098-ee93-4fe0-a7a3-0d8cfa8a618f"),
+                            Id = new Guid("1b876df5-c169-4c10-a588-1c2710e9e689"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5278)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9159)
                         },
                         new
                         {
-                            Id = new Guid("19a5b4a0-f06d-47d9-9de1-f5a762b5c731"),
+                            Id = new Guid("5a8ee0e7-2cab-41d4-98ff-cd25b7f91c98"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5279)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9161)
                         },
                         new
                         {
-                            Id = new Guid("b2074fbf-9558-4d6b-8bf6-35d973c2d78a"),
+                            Id = new Guid("0ae17d29-5f37-4e20-8cd5-5af96b15a93a"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5280)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9163)
                         },
                         new
                         {
-                            Id = new Guid("ef2ea217-5486-4549-9cba-92213642c15b"),
+                            Id = new Guid("5415b3fe-4a93-4b30-b81f-30b5e72b587a"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("50000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5281)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 772, DateTimeKind.Utc).AddTicks(9165)
                         },
                         new
                         {
-                            Id = new Guid("d1d86ee0-1540-4862-99c2-5addfa78186b"),
+                            Id = new Guid("b729446f-3eaf-49d7-8551-9655bd3baae4"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5951)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(107)
                         },
                         new
                         {
-                            Id = new Guid("d6071f22-0176-4c0e-8611-533a2bb46048"),
+                            Id = new Guid("14a982e7-e16e-4980-9500-2fd0ea970f9c"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5955)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(116)
                         },
                         new
                         {
-                            Id = new Guid("3cafdcf4-7cea-44e6-9dc8-94778f52cedd"),
+                            Id = new Guid("fc241e10-8492-4592-a808-f58975a54917"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5956)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(118)
                         },
                         new
                         {
-                            Id = new Guid("108732df-a4f6-456f-bc70-dca0886490c2"),
+                            Id = new Guid("d79d9e23-ad2d-4a0c-a03d-fef010725814"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5957)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(119)
                         },
                         new
                         {
-                            Id = new Guid("0725192e-3361-4c5d-aeda-f87f68e006f2"),
+                            Id = new Guid("b29c2f2b-6557-4045-88fa-319b5e899172"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5959)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(120)
                         },
                         new
                         {
-                            Id = new Guid("3312510c-10e7-4a97-af27-4af8a57073c9"),
+                            Id = new Guid("52281366-3a2d-44fe-a05e-40eb68a2d6d9"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5960)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(121)
                         },
                         new
                         {
-                            Id = new Guid("38c9eddb-0920-45e4-9d0a-1cd416dfa8cb"),
+                            Id = new Guid("2acac99f-999d-4468-b99a-5a472f52be23"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5961)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(123)
                         },
                         new
                         {
-                            Id = new Guid("bb6abda1-c704-4465-84d4-57e47a810f45"),
+                            Id = new Guid("a9713927-261f-49a8-9ca2-7e98cbe00925"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("50000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(5962)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(124)
                         },
                         new
                         {
-                            Id = new Guid("3e5e54e3-77c1-4d29-bbaf-f123052fa811"),
+                            Id = new Guid("1d26d0fc-9cad-4ae6-b508-314e33db38c8"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6425)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(952)
                         },
                         new
                         {
-                            Id = new Guid("2f637a7b-5b86-4d8b-8df2-4061aeb0980e"),
+                            Id = new Guid("bd4c0598-05ad-4301-bb99-177922395982"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6428)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(957)
                         },
                         new
                         {
-                            Id = new Guid("17d256eb-0d6f-46a2-98c2-8dcce83fd828"),
+                            Id = new Guid("af576d5f-93be-46b0-9d9a-df38ac1c8ce7"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6430)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(958)
                         },
                         new
                         {
-                            Id = new Guid("f2fd23c6-a3f6-44e4-98f6-5c7f83d61d3b"),
+                            Id = new Guid("04c8858c-adaa-41fe-8d83-04060280f0f6"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6431)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(959)
                         },
                         new
                         {
-                            Id = new Guid("e078f1c2-8dd0-4fb0-87c8-049c1bf05089"),
+                            Id = new Guid("0c00131e-f3ec-47ef-9c15-103d33a42871"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6432)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(961)
                         },
                         new
                         {
-                            Id = new Guid("1a969444-f0aa-40a3-b768-7fd806ca741e"),
+                            Id = new Guid("df9b845f-3037-4924-a50b-54f569ffcba1"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000002"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6434)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(962)
                         },
                         new
                         {
-                            Id = new Guid("2e08d0c1-7365-4372-b504-dfd82565311a"),
+                            Id = new Guid("3194ceb4-f82b-4b3e-b258-e6be30ca0c30"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000003"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6435)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(963)
                         },
                         new
                         {
-                            Id = new Guid("6053d721-595c-4c7a-8f30-41dc913a9f68"),
+                            Id = new Guid("98624c46-5c2f-4896-bf23-fd9e737942e0"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000004"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6436)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(964)
                         },
                         new
                         {
-                            Id = new Guid("dd0a855c-4f31-4c4c-8c3f-bf1ef2239608"),
+                            Id = new Guid("b1b2c39e-c253-43fb-bbc7-0aa59aed4202"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000005"),
                             RoleId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6437)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(965)
                         },
                         new
                         {
-                            Id = new Guid("52e56ab6-b1a5-4bff-a9cc-4b0ba4403729"),
+                            Id = new Guid("b487c41b-c55b-44a8-8aa1-8014eacf0ad9"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("20000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6836)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(1474)
                         },
                         new
                         {
-                            Id = new Guid("7c9d79ef-c0cd-407d-8b72-a022f972e240"),
+                            Id = new Guid("ad996e3e-8610-4a7c-a5a6-b3a443ba6dd6"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("30000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6839)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(1478)
                         },
                         new
                         {
-                            Id = new Guid("1bb4ce91-cd6d-42b6-b9dd-04eba07fa2ec"),
+                            Id = new Guid("f09d6b39-c793-4948-8253-0e0097a49204"),
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             PermissionId = new Guid("40000000-0000-0000-0000-000000000001"),
                             RoleId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            UpdatedAt = new DateTime(2026, 1, 29, 13, 4, 54, 568, DateTimeKind.Utc).AddTicks(6840)
+                            UpdatedAt = new DateTime(2026, 2, 5, 19, 24, 20, 773, DateTimeKind.Utc).AddTicks(1480)
                         });
                 });
 
@@ -2083,39 +2078,39 @@ namespace Alumni.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("last_name");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("password_hash");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("role_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");

@@ -1,21 +1,6 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
-  postgres:
-    image: postgres:15
-    container_name: alumni_postgres
-    environment:
-      POSTGRES_DB: alumni_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: yourdad
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - alumni_network
-
   # .NET Backend API
   api:
     build:
@@ -24,7 +9,7 @@ services:
     container_name: alumni_api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;Database=alumni_db;User Id=postgres;Password=yourdad;
+      - ConnectionStrings__DefaultConnection=Data Source=alumni.db
       - JWT__Issuer=YourIssuer
       - JWT__Audience=YourAudience
       - JWT__Secret=your-super-secret-jwt-key-change-in-production
@@ -32,17 +17,12 @@ services:
     ports:
       - "5000:80"
       - "5001:443"
-    depends_on:
-      - postgres
     networks:
       - alumni_network
     volumes:
-      - ./AlumniBackendApi:/app
+      - ./WebAPI:/app
       - /app/bin
       - /app/obj
-
-volumes:
-  postgres_data:
 
 networks:
   alumni_network:

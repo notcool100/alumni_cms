@@ -52,7 +52,7 @@ This project has been restructured into a Clean Architecture pattern with separa
 ### Entity Framework Core
 - Clean domain entities with proper encapsulation
 - Repository pattern implementation
-- PostgreSQL database support
+- SQLite database support (alumni.db)
 
 ### JWT Authentication
 - Secure token-based authentication
@@ -128,12 +128,12 @@ The dependencies flow inward, ensuring that:
 The project uses PostgreSQL with Entity Framework Core. Follow these steps to set up the database:
 
 ### Prerequisites
-1. **PostgreSQL**: Make sure PostgreSQL is installed and running
-2. **Connection String**: Update the connection string in `WebAPI/appsettings.json`:
+1. **SQLite**: No installation required (portable)
+2. **Connection String**: Already configured in `WebAPI/appsettings.json`:
    ```json
    {
      "ConnectionStrings": {
-       "DefaultConnection": "Server=localhost;Port=5432;Database=alumni_db;User Id=postgres;Password=your_password;"
+       "DefaultConnection": "Data Source=alumni.db"
      }
    }
    ```

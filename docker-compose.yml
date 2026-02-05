@@ -1,44 +1,25 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
-  postgres:
-    image: postgres:15-alpine
-    container_name: alumni_postgres
-    environment:
-      POSTGRES_DB: alumni_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: yourdad
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - alumni_network
-
-  # Rust Backend
+  # .NET Backend
   backend:
     build:
       context: ./be
       dockerfile: Dockerfile
     container_name: alumni_backend
     environment:
-      DATABASE_URL: postgresql://postgres:yourdad@postgres:5432/alumni_db
-      JWT_SECRET: your-super-secret-jwt-key-change-in-production
-      PORT: 3000
-      ENVIRONMENT: development
-      RUST_LOG: info
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Data Source=alumni.db
+      - JWT__Secret=your-super-secret-jwt-key-change-in-production
+      - PORT=3000
     ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
+      - "3000:80"
     networks:
       - alumni_network
     volumes:
       - ./be:/app
-      - cargo_cache:/usr/local/cargo/registry
-      - target_cache:/app/target
+      - /app/bin
+      - /app/obj
 
   # Svelte Frontend
   frontend:
@@ -58,11 +39,6 @@ services:
     volumes:
       - ./fe:/app
       - /app/node_modules
-
-volumes:
-  postgres_data:
-  cargo_cache:
-  target_cache:
 
 networks:
   alumni_network:

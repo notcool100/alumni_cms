@@ -8,20 +8,23 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy the project file and restore dependencies
-COPY ["AlumniBackendApi/AlumniBackendApi.csproj", "AlumniBackendApi/"]
-RUN dotnet restore "AlumniBackendApi/AlumniBackendApi.csproj"
+# Copy all project files and restore dependencies
+COPY ["WebAPI/Alumni.WebAPI.csproj", "WebAPI/"]
+COPY ["Infrastructure/Alumni.Infrastructure.csproj", "Infrastructure/"]
+COPY ["Application/Alumni.Application.csproj", "Application/"]
+COPY ["Domain/Alumni.Domain.csproj", "Domain/"]
+RUN dotnet restore "WebAPI/Alumni.WebAPI.csproj"
 
 # Copy the rest of the source code
 COPY . .
-WORKDIR "/src/AlumniBackendApi"
+WORKDIR "/src/WebAPI"
 
 # Build the application
-RUN dotnet build "AlumniBackendApi.csproj" -c Release -o /app/build
+RUN dotnet build "Alumni.WebAPI.csproj" -c Release -o /app/build
 
 # Publish the application
 FROM build AS publish
-RUN dotnet publish "AlumniBackendApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "Alumni.WebAPI.csproj" -c Release -o /app/publish
 
 # Build the runtime image
 FROM base AS final
@@ -33,7 +36,8 @@ ENV ASPNETCORE_URLS=http://+:80
 ENV ASPNETCORE_ENVIRONMENT=Production
 
 # Create a non-root user
+# Note: For SQLite, the user needs write access to the directory containing the .db file
 RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
 USER appuser
 
-ENTRYPOINT ["dotnet", "AlumniBackendApi.dll"]
+ENTRYPOINT ["dotnet", "Alumni.WebAPI.dll"]

@@ -18,7 +18,7 @@ public static class DependencyInjection
     {
         // Add DbContext
         services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
         // Add Repositories
         services.AddScoped<IUserRepository, UserRepository>();
