@@ -1,11 +1,13 @@
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Mvc;
 using Alumni.Application;
 using Alumni.Infrastructure;
 using Alumni.Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Sentry;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseSentry();
 
 // Add services to the container
 builder.Services.AddControllers();
@@ -39,7 +41,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Alumni Backend API", Version = "v1" });
-    
+
     // Add JWT authentication to Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
